@@ -18,11 +18,12 @@ import java.time.LocalDateTime;
 @Table(name = "price")
 public class Price {
     @Id
+    @Column(name = "price_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long priceId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "carId")
+    @JoinColumn(name = "car_id_fk")
     private Car car;
 
     private Double price;

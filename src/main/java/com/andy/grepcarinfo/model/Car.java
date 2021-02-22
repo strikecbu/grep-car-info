@@ -22,6 +22,7 @@ import java.util.List;
 public class Car {
 
     @Id
+    @Column(name = "car_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long carId;
 
@@ -39,7 +40,7 @@ public class Car {
     @UpdateTimestamp
     private LocalDateTime updateTime;
 
-    @OneToMany(mappedBy = "priceId", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "car", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Price> prices = new ArrayList<>();
 
     private boolean isSold;
