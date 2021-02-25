@@ -43,8 +43,10 @@ public class Car {
 
     private boolean isSold;
 
+    @Lob
     private String picUrl;
 
+    @Lob
     private String newCarUrl;
 
     @Transient

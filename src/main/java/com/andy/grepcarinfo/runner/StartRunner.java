@@ -73,5 +73,6 @@ public class StartRunner implements CommandLineRunner {
                 carRepository.save(car);
             }
         }
+        LOGGER.info("Car information update complete.");
     }
 }
