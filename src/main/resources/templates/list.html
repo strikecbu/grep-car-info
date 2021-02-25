@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>List Car</title>
+</head>
+<body>
+    <div>
+        <table border="solid" >
+        <tbody>
+        <tr>
+            <th>編號</th>
+            <th>年份</th>
+            <th>車名</th>
+            <th>最新價錢</th>
+            <th>上架日期</th>
+            <th>最後更新日期</th>
+            <th>賣出花費天數</th>
+            <th>車輛照片</th>
+            <th>配備參考</th>
+        </tr>
+        <!--/*@thymesVar id="car" type="com.andy.grepcarinfo.model.Car"*/-->
+        <!--/*@thymesVar id="carList" type="java.util.List"*/-->
+        <tr th:each="car, status : ${carList}">
+            <td th:text="${status.index + 1}">1</td>
+            <td th:text="${car.getYear}">2020/2020</td>
+            <td th:text="${car.getName}">Focus</td>
+            <td><span th:text="${car.getLatestPrice}? ${car.getLatestPrice} + '萬': '-'">12.3萬</span></td>
+            <td th:text="${#dates.format(car.getInitTime, 'yyyy/MM/dd/')}">2021/02/20</td>
+            <td th:text="${#dates.format(car.getUpdateTime, 'yyyy/MM/dd/')}">2021/02/21</td>
+            <td><span th:text="${car.getDayOfSold} ? ${car.getDayOfSold} + '天' : '-'">1天</span></td>
+            <td><span th:if="${car.getPicUrl} != null"><a target="_blank" th:href="${car.getPicUrl}">照片</a></span></td>
+            <td><span th:if="${car.getPicUrl} != null"><a target="_blank" th:href="${car.getNewCarUrl}">參考</a></span></td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+</body>
+</html>

@@ -1,12 +1,10 @@
 package com.andy.grepcarinfo.model;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.sql.Date;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,10 +33,10 @@ public class Car {
     private String description;
 
     @CreationTimestamp
-    private LocalDateTime initTime;
+    private Timestamp initTime;
 
     @UpdateTimestamp
-    private LocalDateTime updateTime;
+    private Timestamp updateTime;
 
     @OneToMany(mappedBy = "car", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Price> prices = new ArrayList<>();
@@ -48,6 +46,11 @@ public class Car {
     private String picUrl;
 
     private String newCarUrl;
+
+    @Transient
+    private Double latestPrice;
+    @Transient
+    private Long DayOfSold;
 
     public Long getCarId() {
         return carId;
@@ -81,19 +84,19 @@ public class Car {
         this.description = description;
     }
 
-    public LocalDateTime getInitTime() {
+    public Timestamp getInitTime() {
         return initTime;
     }
 
-    public void setInitTime(LocalDateTime initTime) {
+    public void setInitTime(Timestamp initTime) {
         this.initTime = initTime;
     }
 
-    public LocalDateTime getUpdateTime() {
+    public Timestamp getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(LocalDateTime updateTime) {
+    public void setUpdateTime(Timestamp updateTime) {
         this.updateTime = updateTime;
     }
 
@@ -127,5 +130,21 @@ public class Car {
 
     public void setNewCarUrl(String newCarUrl) {
         this.newCarUrl = newCarUrl;
+    }
+
+    public Double getLatestPrice() {
+        return latestPrice;
+    }
+
+    public void setLatestPrice(Double latestPrice) {
+        this.latestPrice = latestPrice;
+    }
+
+    public Long getDayOfSold() {
+        return DayOfSold;
+    }
+
+    public void setDayOfSold(Long dayOfSold) {
+        DayOfSold = dayOfSold;
     }
 }
