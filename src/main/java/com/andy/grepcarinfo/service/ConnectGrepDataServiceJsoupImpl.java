@@ -6,10 +6,11 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -25,6 +26,8 @@ import java.util.stream.Collectors;
  */
 @Service("grepDataJsoupService")
 public class ConnectGrepDataServiceJsoupImpl implements ConnectGrepDataService {
+
+    final private static Logger LOGGER = LoggerFactory.getLogger(ConnectGrepDataServiceJsoupImpl.class);
 
     @Override
     public List<Car> grepCarData(String url) throws IOException {
@@ -67,6 +70,7 @@ public class ConnectGrepDataServiceJsoupImpl implements ConnectGrepDataService {
                     }
                     return car;
                 }).collect(Collectors.toList());
+        LOGGER.info("共找到{}台汽車", collect.size());
         return collect;
     }
 
