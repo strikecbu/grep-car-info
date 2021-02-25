@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -48,11 +49,8 @@ public class CarListController {
 
                     //賣出花費天數
                     if (car.isSold()) {
-                        final LocalDate initDate = LocalDate.ofInstant(car.getInitTime().toInstant(), ZoneId.of("UTC" +
-                                "+8"));
-                        final LocalDate updateDate = LocalDate.ofInstant(car.getUpdateTime().toInstant(), ZoneId.of(
-                                "UTC+8"));
-                        final long days = ChronoUnit.DAYS.between(initDate, updateDate);
+                        long days =
+                                TimeUnit.DAYS.convert(car.getUpdateTime().getTime() - car.getInitTime().getTime(), TimeUnit.MILLISECONDS);
                         car.setDayOfSold(days);
                     }
                 }).collect(Collectors.toList());
