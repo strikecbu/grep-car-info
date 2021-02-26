@@ -15,7 +15,7 @@ public class UpdateCarInfoSchedule {
     private final CarInfoUpdateService carInfoUpdateService;
 
     public UpdateCarInfoSchedule(CarInfoUpdateService carInfoUpdateService) {
-        LOGGER.info("Update car info schedule is on.");
+        LOGGER.debug("Update car info schedule is on.");
         this.carInfoUpdateService = carInfoUpdateService;
     }
 

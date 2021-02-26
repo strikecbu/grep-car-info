@@ -49,8 +49,9 @@ public class CarListController {
 
                     //賣出花費天數
                     if (car.isSold()) {
-                        long days =
-                                TimeUnit.DAYS.convert(car.getUpdateTime().getTime() - car.getInitTime().getTime(), TimeUnit.MILLISECONDS);
+                        long hours =
+                                TimeUnit.HOURS.convert(car.getUpdateTime().getTime() - car.getInitTime().getTime(), TimeUnit.MILLISECONDS);
+                        long days = (long) Math.ceil((float) hours / 24);
                         car.setDayOfSold(days);
                     }
                 }).collect(Collectors.toList());
