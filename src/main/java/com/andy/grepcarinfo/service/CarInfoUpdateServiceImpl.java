@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.List;
@@ -27,6 +28,7 @@ public class CarInfoUpdateServiceImpl implements CarInfoUpdateService {
 
 
     @Override
+    @Transactional
     public void updateShiouShiCar() throws IOException {
         long start = System.currentTimeMillis();
         final String url = "https://mama1978777.pixnet.net/blog/post/96336596";

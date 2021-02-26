@@ -7,6 +7,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.sql.Time;
 
 @Component
 public class UpdateCarInfoSchedule {
@@ -19,7 +20,8 @@ public class UpdateCarInfoSchedule {
         this.carInfoUpdateService = carInfoUpdateService;
     }
 
-    @Scheduled(cron = "0 0 3 * * ?")
+    // 啟動後10秒更新，之後每1小時更新
+    @Scheduled(fixedDelay = 60 * 60 * 1000, initialDelay = 10000)
     public void update() throws IOException {
         carInfoUpdateService.updateShiouShiCar();
     }

@@ -25,8 +25,8 @@ public class StartRunner implements CommandLineRunner {
     }
 
     @Override
-    @Transactional
     public void run(String... args) throws Exception {
-        carInfoUpdateService.updateShiouShiCar();
+        // 轉交給schedule操作
+//        carInfoUpdateService.updateShiouShiCar();
     }
 }
