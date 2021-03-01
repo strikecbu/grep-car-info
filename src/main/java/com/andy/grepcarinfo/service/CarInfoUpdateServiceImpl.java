@@ -2,6 +2,7 @@ package com.andy.grepcarinfo.service;
 
 import com.andy.grepcarinfo.model.Car;
 import com.andy.grepcarinfo.model.Price;
+import com.andy.grepcarinfo.model.UpdateInfo;
 import com.andy.grepcarinfo.repository.CarRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,10 +21,12 @@ public class CarInfoUpdateServiceImpl implements CarInfoUpdateService {
 
     final private ConnectGrepDataService grepDataService;
     final private CarRepository carRepository;
+    final private UpdateInfo updateInfo;
 
-    public CarInfoUpdateServiceImpl(@Qualifier("grepDataJsoupService") ConnectGrepDataService grepDataService, CarRepository carRepository) {
+    public CarInfoUpdateServiceImpl(@Qualifier("grepDataJsoupService") ConnectGrepDataService grepDataService, CarRepository carRepository, UpdateInfo updateInfo) {
         this.grepDataService = grepDataService;
         this.carRepository = carRepository;
+        this.updateInfo = updateInfo;
     }
 
 
@@ -34,7 +37,6 @@ public class CarInfoUpdateServiceImpl implements CarInfoUpdateService {
         final String url = "https://mama1978777.pixnet.net/blog/post/96336596";
         LOGGER.info("取得目標URL: {}", url);
         final List<Car> cars = grepDataService.grepCarData(url);
-
         for (Car car : cars) {
             final String carName = car.getName();
             final Car existCar = carRepository.findByName(carName);
@@ -62,6 +64,8 @@ public class CarInfoUpdateServiceImpl implements CarInfoUpdateService {
                 carRepository.save(car);
             }
         }
+        String updateDate = grepDataService.getLatestUpdateDate(url);
+        updateInfo.setShiouShiDate(updateDate);
         long end = System.currentTimeMillis();
         LOGGER.info("Car information update complete, total spend {} ms.", end - start);
     }

@@ -13,5 +13,7 @@ import java.util.List;
  * @since 2021/2/20
  */
 public interface ConnectGrepDataService {
+    String getLatestUpdateDate(String url) throws IOException;
+
     List<Car> grepCarData(String url) throws IOException;
 }

@@ -2,13 +2,12 @@ package com.andy.grepcarinfo.Controller;
 
 import com.andy.grepcarinfo.model.Car;
 import com.andy.grepcarinfo.model.Price;
+import com.andy.grepcarinfo.model.UpdateInfo;
 import com.andy.grepcarinfo.repository.CarRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.time.*;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -25,9 +24,11 @@ import java.util.stream.StreamSupport;
 public class CarListController {
 
     final private CarRepository repository;
+    final private UpdateInfo updateInfo;
 
-    public CarListController(CarRepository repository) {
+    public CarListController(CarRepository repository, UpdateInfo updateInfo) {
         this.repository = repository;
+        this.updateInfo = updateInfo;
     }
 
     @RequestMapping("/list")
@@ -56,6 +57,7 @@ public class CarListController {
                     }
                 }).collect(Collectors.toList());
         model.addAttribute("carList", collect);
+        model.addAttribute("updateDate", updateInfo.getShiouShiDate());
 
         return "list";
     }

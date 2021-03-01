@@ -30,6 +30,23 @@ public class ConnectGrepDataServiceJsoupImpl implements ConnectGrepDataService {
     final private static Logger LOGGER = LoggerFactory.getLogger(ConnectGrepDataServiceJsoupImpl.class);
 
     @Override
+    public String getLatestUpdateDate(String url) throws IOException {
+        final Document doc = Jsoup.connect(url).timeout(60000).get();
+        for (Element element : doc.getElementsByTag("meta")) {
+            String attr = element.attr("name");
+            if(!"keywords".equals(attr))
+                continue;
+            String content = element.attr("content");
+            String reg = "(\\d{4}/\\d{2}/\\d{2})\\s更新出售中車輛";
+            Matcher matcher = Pattern.compile(reg).matcher(content);
+            if (matcher.find()) {
+                return matcher.group(1);
+            }
+        }
+        return null;
+    }
+
+    @Override
     public List<Car> grepCarData(String url) throws IOException {
         final Document doc = Jsoup.connect(url).timeout(60000).get();
         final Element content = doc.getElementsByAttributeValue("itemprop", "articleBody").get(0);
@@ -49,6 +66,8 @@ public class ConnectGrepDataServiceJsoupImpl implements ConnectGrepDataService {
                 continue;
 
             if (child.tag().getName().equals("hr")) {
+                if(infos.size() == 0) // avoid when start get info but hit hr first
+                    continue;
                 list.add(infos);
                 infos = new ArrayList<>();
                 continue;
@@ -67,6 +86,7 @@ public class ConnectGrepDataServiceJsoupImpl implements ConnectGrepDataService {
                         }
                         String text = element.text();
                         transTextToCar(car, aTagUrl, text);
+                        car.setVendor("小施");
                     }
                     return car;
                 }).collect(Collectors.toList());
@@ -104,10 +124,14 @@ public class ConnectGrepDataServiceJsoupImpl implements ConnectGrepDataService {
                 }
             }
         } else {
-            text = text.replaceAll("(規格配備)?按我參考", "").trim();
-            car.setDescription(text);
+            final String regex = "(規格配備)?按我參考";
+            text = text.replaceAll(regex, "").trim();
+            if(car.getDescription() == null)
+                car.setDescription(text);
             //新車按我參考
-            car.setNewCarUrl(aTagUrl);
+            if(car.getNewCarUrl() == null)
+                car.setNewCarUrl(aTagUrl);
+
         }
     }
 }

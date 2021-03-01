@@ -1,5 +1,7 @@
 package com.andy.grepcarinfo.config;
 
+import com.andy.grepcarinfo.model.UpdateInfo;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
@@ -13,4 +15,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @Configuration
 @EnableScheduling
 public class ConfigBean {
+
+    @Bean
+    public UpdateInfo updateInfo() {
+        return new UpdateInfo();
+    }
 }

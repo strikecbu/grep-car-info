@@ -22,6 +22,11 @@ import java.util.List;
 public class ConnectGrepDataServiceImpl implements ConnectGrepDataService {
 
     @Override
+    public String getLatestUpdateDate(String url) throws IOException {
+        return null;
+    }
+
+    @Override
     public List<Car> grepCarData(String url) throws IOException {
         final URL urlO = new URL(url);
         final URLConnection connection = urlO.openConnection();
