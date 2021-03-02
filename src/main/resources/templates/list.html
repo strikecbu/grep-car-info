@@ -31,7 +31,7 @@
             <td th:text="${car.getName}">Focus</td>
             <td><span th:text="${car.getLatestPrice}? ${car.getLatestPrice} + '萬': '-'">12.3萬</span></td>
             <td><span th:if="${car.getPicUrl} != null"><a target="_blank" th:href="${car.getPicUrl}">照片</a></span></td>
-            <td><span th:if="${car.getPicUrl} != null"><a target="_blank" th:href="${car.getNewCarUrl}">參考</a></span></td>
+            <td><span th:if="${car.getNewCarUrl} != null"><a target="_blank" th:href="${car.getNewCarUrl}">參考</a></span></td>
             <td th:text="${#dates.format(car.getInitTime, 'MM/dd')}">02/20</td>
             <td th:text="${#dates.format(car.getUpdateTime, 'MM/dd')}">02/21</td>
             <td th:text="${car.isSold?'Ｏ':'-'}">Ｏ</td>
