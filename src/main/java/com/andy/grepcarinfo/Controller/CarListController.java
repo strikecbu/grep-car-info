@@ -34,7 +34,12 @@ public class CarListController {
     @RequestMapping("/list")
     public String list(Model model) {
         final Iterable<Car> all = repository.findAll();
-        final List<Car> collect = StreamSupport.stream(all.spliterator(), false)
+        final HashMap<String, ArrayList<Car>> carMap = new HashMap<>();
+        final String SOLD_CAR = "SOLD_CAR";
+        final String SELL_CAR = "SELL_CAR";
+        carMap.put(SOLD_CAR, new ArrayList<>());
+        carMap.put(SELL_CAR, new ArrayList<>());
+        StreamSupport.stream(all.spliterator(), false)
                 .sorted((o1, o2) -> {
                     final String year1 = o1.getYear().split("/")[0];
                     final String year2 = o2.getYear().split("/")[0];
@@ -55,10 +60,18 @@ public class CarListController {
                         long days = (long) Math.ceil((float) hours / 24);
                         car.setDayOfSold(days);
                     }
-                }).collect(Collectors.toList());
-        model.addAttribute("carList", collect);
+                }).forEach(car -> {
+                    final ArrayList<Car> cars;
+                    if (car.isSold()) {
+                        cars = carMap.get(SOLD_CAR);
+                    } else {
+                        cars = carMap.get(SELL_CAR);
+                    }
+                    cars.add(car);
+                });
+        model.addAttribute(SOLD_CAR, carMap.get(SOLD_CAR));
+        model.addAttribute(SELL_CAR, carMap.get(SELL_CAR));
         model.addAttribute("updateDate", updateInfo.getShiouShiDate());
-
         return "list";
     }
 }
