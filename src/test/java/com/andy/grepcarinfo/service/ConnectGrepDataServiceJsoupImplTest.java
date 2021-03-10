@@ -1,8 +1,8 @@
 package com.andy.grepcarinfo.service;
 
 import com.andy.grepcarinfo.model.Car;
+import com.andy.grepcarinfo.model.UpdateInfo;
 import org.junit.jupiter.api.Test;
-import org.springframework.util.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,8 @@ class ConnectGrepDataServiceJsoupImplTest {
     @Test
     void transTextToCar() {
         List<String[]> list = new ArrayList<>();
-        final ConnectGrepDataServiceJsoupImpl service = new ConnectGrepDataServiceJsoupImpl();
+        final UpdateInfo updateInfo = new UpdateInfo();
+        final ConnectGrepDataServiceJsoupImpl service = new ConnectGrepDataServiceJsoupImpl(updateInfo);
         String[] sample1 = {"2020/2020 NISSAN SENTRA 四門 白色 1.6L 自排已收訂感恩深坑陳先生"};
         String[] sample2 =
                 {"2020/2020 LEXUS NX300 F SPORT 五門 白色 2.0T 手自排 179.8萬 賞車按我",

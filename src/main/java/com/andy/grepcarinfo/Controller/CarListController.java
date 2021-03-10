@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.StreamSupport;
 
 /**
@@ -41,9 +42,16 @@ public class CarListController {
         carMap.put(SELL_CAR, new ArrayList<>());
         StreamSupport.stream(all.spliterator(), false)
                 .sorted((o1, o2) -> {
-                    final String year1 = o1.getYear().split("/")[0];
-                    final String year2 = o2.getYear().split("/")[0];
+                    String regularStr = "^(\\d{4})[/年].*";
+                    final Pattern pattern = Pattern.compile(regularStr);
+                    final Matcher matcher1 = pattern.matcher(o1.getYear());
+                    final Matcher matcher2 = pattern.matcher(o2.getYear());
+                    matcher1.find();
+                    matcher2.find();
+                    final String year1 = matcher1.group(1);
+                    final String year2 = matcher2.group(1);
                     return -1 * Integer.compare(Integer.parseInt(year1), Integer.parseInt(year2));
+
                 }).peek(car -> {
                     //最新價錢
                     final Optional<Price> max = car.getPrices().stream()

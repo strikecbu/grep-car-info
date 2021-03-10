@@ -3,6 +3,7 @@ package com.andy.grepcarinfo.schedule;
 import com.andy.grepcarinfo.service.CarInfoUpdateService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -12,17 +13,18 @@ import java.io.IOException;
 public class UpdateCarInfoSchedule {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(UpdateCarInfoSchedule.class);
-    private final CarInfoUpdateService carInfoUpdateService;
+    private final CarInfoUpdateService shouShiUpdateService;
 
-    public UpdateCarInfoSchedule(CarInfoUpdateService carInfoUpdateService) {
+    public UpdateCarInfoSchedule(@Qualifier("carInfoUpdateShouShiService") CarInfoUpdateService shouShiUpdateService) {
         LOGGER.debug("Update car info schedule is on.");
-        this.carInfoUpdateService = carInfoUpdateService;
+        this.shouShiUpdateService = shouShiUpdateService;
     }
 
     // 啟動後10秒更新，之後每1小時更新
-    @Scheduled(fixedDelay = 60 * 60 * 1000, initialDelay = 10000)
+    @Scheduled(fixedDelay = 60 * 60 * 1000)
     public void update() throws IOException {
-        carInfoUpdateService.updateShiouShiCar();
+        shouShiUpdateService.updateCarInfo(CarInfoUpdateService.Vendor.SHOU_SHI);
+        shouShiUpdateService.updateCarInfo(CarInfoUpdateService.Vendor.TWO_THOUSAND);
     }
 
 }

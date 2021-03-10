@@ -18,11 +18,6 @@ import javax.transaction.Transactional;
 @Component
 public class StartRunner implements CommandLineRunner {
 
-    final private CarInfoUpdateService carInfoUpdateService;
-
-    public StartRunner(CarInfoUpdateService carInfoUpdateService) {
-        this.carInfoUpdateService = carInfoUpdateService;
-    }
 
     @Override
     public void run(String... args) throws Exception {

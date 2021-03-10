@@ -1,6 +1,7 @@
 package com.andy.grepcarinfo.service;
 
 import com.andy.grepcarinfo.model.Car;
+import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
  * @since 2021/2/20
  */
 public interface ConnectGrepDataService {
-    String getLatestUpdateDate(String url) throws IOException;
+    void setLatestUpdateDate(Document pageDoc) throws IOException;
 
     List<Car> grepCarData(String url) throws IOException;
 }

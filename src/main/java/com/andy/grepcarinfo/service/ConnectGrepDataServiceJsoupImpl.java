@@ -2,6 +2,7 @@ package com.andy.grepcarinfo.service;
 
 import com.andy.grepcarinfo.model.Car;
 import com.andy.grepcarinfo.model.Price;
+import com.andy.grepcarinfo.model.UpdateInfo;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -24,15 +25,20 @@ import java.util.stream.Collectors;
  * </ul>
  * @since 2021/2/20
  */
-@Service("grepDataJsoupService")
+@Service
 public class ConnectGrepDataServiceJsoupImpl implements ConnectGrepDataService {
 
     final private static Logger LOGGER = LoggerFactory.getLogger(ConnectGrepDataServiceJsoupImpl.class);
 
+    final private UpdateInfo updateInfo;
+
+    public ConnectGrepDataServiceJsoupImpl(UpdateInfo updateInfo) {
+        this.updateInfo = updateInfo;
+    }
+
     @Override
-    public String getLatestUpdateDate(String url) throws IOException {
-        final Document doc = Jsoup.connect(url).timeout(60000).get();
-        for (Element element : doc.getElementsByTag("meta")) {
+    public void setLatestUpdateDate(Document pageDoc) throws IOException {
+        for (Element element : pageDoc.getElementsByTag("meta")) {
             String attr = element.attr("name");
             if(!"keywords".equals(attr))
                 continue;
@@ -40,10 +46,11 @@ public class ConnectGrepDataServiceJsoupImpl implements ConnectGrepDataService {
             String reg = "(\\d{4}/\\d{2}/\\d{2})\\s更新出售中車輛";
             Matcher matcher = Pattern.compile(reg).matcher(content);
             if (matcher.find()) {
-                return matcher.group(1);
+                final String date = matcher.group(1);
+                LOGGER.info("更新最後更新日期： {}", date);
+                updateInfo.setShiouShiDate(date);
             }
         }
-        return null;
     }
 
     @Override
@@ -91,6 +98,8 @@ public class ConnectGrepDataServiceJsoupImpl implements ConnectGrepDataService {
                     return car;
                 }).collect(Collectors.toList());
         LOGGER.info("共找到{}台汽車", collect.size());
+        setLatestUpdateDate(doc);
+
         return collect;
     }
 

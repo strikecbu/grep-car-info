@@ -2,11 +2,10 @@ package com.andy.grepcarinfo.service;
 
 import com.andy.grepcarinfo.model.Car;
 import com.andy.grepcarinfo.model.Price;
-import com.andy.grepcarinfo.model.UpdateInfo;
 import com.andy.grepcarinfo.repository.CarRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -15,27 +14,34 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @Service
-public class CarInfoUpdateServiceImpl implements CarInfoUpdateService {
+public class CarInfoUpdateShouShiService implements CarInfoUpdateService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CarInfoUpdateServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CarInfoUpdateShouShiService.class);
 
-    final private ConnectGrepDataService grepDataService;
+    final private ApplicationContext applicationContext;
     final private CarRepository carRepository;
-    final private UpdateInfo updateInfo;
 
-    public CarInfoUpdateServiceImpl(@Qualifier("grepDataJsoupService") ConnectGrepDataService grepDataService, CarRepository carRepository, UpdateInfo updateInfo) {
-        this.grepDataService = grepDataService;
+    public CarInfoUpdateShouShiService(ApplicationContext applicationContext, CarRepository carRepository) {
+        this.applicationContext = applicationContext;
         this.carRepository = carRepository;
-        this.updateInfo = updateInfo;
     }
 
 
     @Override
     @Transactional
-    public void updateShiouShiCar() throws IOException {
+    public void updateCarInfo(Vendor vendor) throws IOException {
         long start = System.currentTimeMillis();
-        final String url = "https://mama1978777.pixnet.net/blog/post/96336596";
+        final String url = vendor.getUrl();
         LOGGER.info("取得目標URL: {}", url);
+        final String[] beans = applicationContext.getBeanNamesForType(ConnectGrepDataService.class);
+        ConnectGrepDataService grepDataService = null;
+        for (String beanName : beans) {
+            final String className = vendor.getGrepDateServiceClass().getSimpleName();
+            if (className.equalsIgnoreCase(beanName)) {
+                grepDataService = (ConnectGrepDataService) applicationContext.getBean(vendor.getGrepDateServiceClass());
+                break;
+            }
+        }
         final List<Car> cars = grepDataService.grepCarData(url);
         for (Car car : cars) {
             final String carName = car.getName();
@@ -64,8 +70,6 @@ public class CarInfoUpdateServiceImpl implements CarInfoUpdateService {
                 carRepository.save(car);
             }
         }
-        String updateDate = grepDataService.getLatestUpdateDate(url);
-        updateInfo.setShiouShiDate(updateDate);
         long end = System.currentTimeMillis();
         LOGGER.info("Car information update complete, total spend {} ms.", end - start);
     }
