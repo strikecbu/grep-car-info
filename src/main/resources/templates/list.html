@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>List Car</title>
+
 </head>
 <body>
     <div>最後更新日: <span th:text="${updateDate}">2021/03/08</span></div>
@@ -22,9 +23,23 @@
             <th>是否賣出</th>
             <th>賣出花費天數</th>
         </tr>
-        <!--/*@thymesVar id="car" type="com.andy.grepcarinfo.model.Car"*/-->
-        <!--/*@thymesVar id="carList" type="java.util.List"*/-->
-        <tr th:each="car, status : ${SELL_CAR}">
+        <tr th:each="car, status : ${SHOU_SHI_CAR}">
+            <td th:text="${status.index + 1}">1</td>
+            <td th:text="${car.getVendor}">小施</td>
+            <td th:text="${car.getYear}">2020/2020</td>
+            <td th:text="${car.getName}">Focus</td>
+            <td><span th:text="${car.getLatestPrice}? ${car.getLatestPrice} + '萬': '-'">12.3萬</span></td>
+            <td><span th:if="${car.getPicUrl} != null"><a target="_blank" th:href="${car.getPicUrl}">照片</a></span></td>
+            <td><span th:if="${car.getNewCarUrl} != null"><a target="_blank" th:href="${car.getNewCarUrl}">參考</a></span></td>
+            <td th:text="${#dates.format(car.getInitTime, 'MM/dd')}">02/20</td>
+            <td th:text="${#dates.format(car.getUpdateTime, 'MM/dd')}">02/21</td>
+            <td th:text="${car.isSold?'Ｏ':'-'}">Ｏ</td>
+            <td><span th:text="${car.getDayOfSold} ? ${car.getDayOfSold} + '天' : '-'">1天</span></td>
+        </tr>
+        <tr>
+            <td colspan="11" style="text-align: center"> ========= 車商分隔線 =========</td>
+        </tr>
+        <tr th:each="car, status : ${TWO_THOUSAND_CAR}">
             <td th:text="${status.index + 1}">1</td>
             <td th:text="${car.getVendor}">小施</td>
             <td th:text="${car.getYear}">2020/2020</td>

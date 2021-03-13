@@ -35,11 +35,9 @@ public class CarListController {
     @RequestMapping("/list")
     public String list(Model model) {
         final Iterable<Car> all = repository.findAll();
-        final HashMap<String, ArrayList<Car>> carMap = new HashMap<>();
-        final String SOLD_CAR = "SOLD_CAR";
-        final String SELL_CAR = "SELL_CAR";
-        carMap.put(SOLD_CAR, new ArrayList<>());
-        carMap.put(SELL_CAR, new ArrayList<>());
+
+        final ArrayList<Car> soldCars = new ArrayList<>();
+        final ArrayList<Car> stillSellCars = new ArrayList<>();
         StreamSupport.stream(all.spliterator(), false)
                 .sorted((o1, o2) -> {
                     String regularStr = "^(\\d{4})[/年].*";
@@ -71,14 +69,23 @@ public class CarListController {
                 }).forEach(car -> {
                     final ArrayList<Car> cars;
                     if (car.isSold()) {
-                        cars = carMap.get(SOLD_CAR);
+                        soldCars.add(car);
                     } else {
-                        cars = carMap.get(SELL_CAR);
+                        stillSellCars.add(car);
                     }
-                    cars.add(car);
                 });
-        model.addAttribute(SOLD_CAR, carMap.get(SOLD_CAR));
-        model.addAttribute(SELL_CAR, carMap.get(SELL_CAR));
+        final ArrayList<Object> shouShiCars = new ArrayList<>();
+        final ArrayList<Object> twoThousandCars = new ArrayList<>();
+        stillSellCars.forEach(car -> {
+            if ("小施".equals(car.getVendor())) {
+                shouShiCars.add(car);
+            } else {
+                twoThousandCars.add(car);
+            }
+        });
+        model.addAttribute("SOLD_CAR", soldCars);
+        model.addAttribute("SHOU_SHI_CAR", shouShiCars);
+        model.addAttribute("TWO_THOUSAND_CAR", twoThousandCars);
         model.addAttribute("updateDate", updateInfo.getShiouShiDate());
         return "list";
     }
