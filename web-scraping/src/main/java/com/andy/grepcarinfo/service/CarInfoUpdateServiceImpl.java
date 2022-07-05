@@ -15,14 +15,14 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @Service
-public class CarInfoUpdateShouShiService implements CarInfoUpdateService {
+public class CarInfoUpdateServiceImpl implements CarInfoUpdateService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CarInfoUpdateShouShiService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CarInfoUpdateServiceImpl.class);
 
     final private ApplicationContext applicationContext;
     final private CarRepository carRepository;
 
-    public CarInfoUpdateShouShiService(ApplicationContext applicationContext, CarRepository carRepository) {
+    public CarInfoUpdateServiceImpl(ApplicationContext applicationContext, CarRepository carRepository) {
         this.applicationContext = applicationContext;
         this.carRepository = carRepository;
     }

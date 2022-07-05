@@ -26,13 +26,13 @@ import java.util.stream.Collectors;
  * @since 2021/2/20
  */
 @Service
-public class ConnectGrepDataServiceJsoupImpl implements ConnectGrepDataService {
+public class ConnectGrepDataServiceShouShiImpl implements ConnectGrepDataService {
 
-    final private static Logger LOGGER = LoggerFactory.getLogger(ConnectGrepDataServiceJsoupImpl.class);
+    final private static Logger LOGGER = LoggerFactory.getLogger(ConnectGrepDataServiceShouShiImpl.class);
 
     final private UpdateInfo updateInfo;
 
-    public ConnectGrepDataServiceJsoupImpl(UpdateInfo updateInfo) {
+    public ConnectGrepDataServiceShouShiImpl(UpdateInfo updateInfo) {
         this.updateInfo = updateInfo;
     }
 

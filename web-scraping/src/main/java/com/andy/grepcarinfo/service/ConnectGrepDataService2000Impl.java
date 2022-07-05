@@ -25,13 +25,13 @@ import java.util.regex.Pattern;
  * @since 2021/3/9
  */
 @Service
-public class ConnectGrep2000DataService implements ConnectGrepDataService {
+public class ConnectGrepDataService2000Impl implements ConnectGrepDataService {
 
-    final private static Logger LOGGER = LoggerFactory.getLogger(ConnectGrepDataServiceJsoupImpl.class);
+    final private static Logger LOGGER = LoggerFactory.getLogger(ConnectGrepDataServiceShouShiImpl.class);
 
     final private UpdateInfo updateInfo;
 
-    public ConnectGrep2000DataService(UpdateInfo updateInfo) {
+    public ConnectGrepDataService2000Impl(UpdateInfo updateInfo) {
         this.updateInfo = updateInfo;
     }
 

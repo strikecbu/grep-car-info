@@ -16,7 +16,7 @@ public class UpdateCarInfoSchedule {
     private final static Logger LOGGER = LoggerFactory.getLogger(UpdateCarInfoSchedule.class);
     private final CarInfoUpdateService shouShiUpdateService;
 
-    public UpdateCarInfoSchedule(@Qualifier("carInfoUpdateShouShiService") CarInfoUpdateService shouShiUpdateService) {
+    public UpdateCarInfoSchedule(@Qualifier("carInfoUpdateServiceImpl") CarInfoUpdateService shouShiUpdateService) {
         LOGGER.debug("Update car info schedule is on.");
         this.shouShiUpdateService = shouShiUpdateService;
     }
