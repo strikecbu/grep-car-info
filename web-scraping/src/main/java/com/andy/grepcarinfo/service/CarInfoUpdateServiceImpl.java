@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -43,7 +44,8 @@ public class CarInfoUpdateServiceImpl implements CarInfoUpdateService {
                 break;
             }
         }
-        final List<Car> cars = grepDataService.grepCarData(url);
+//        final List<Car> cars = grepDataService.grepCarData(url);
+        final List<Car> cars = new ArrayList<>();
         for (Car car : cars) {
             final String carName = car.getName();
             final Car existCar = carRepository.findByName(carName);

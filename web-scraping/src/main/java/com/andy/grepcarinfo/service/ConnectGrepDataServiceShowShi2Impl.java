@@ -1,7 +1,8 @@
 package com.andy.grepcarinfo.service;
 
-import com.andy.grepcarinfo.model.Car;
+import com.andy.grepcarinfo.exception.FetchDataException;
 import com.andy.grepcarinfo.model.CarView;
+import com.andy.grepcarinfo.model.VendorType;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -13,23 +14,14 @@ import reactor.core.scheduler.Schedulers;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
 @Slf4j
 public class ConnectGrepDataServiceShowShi2Impl implements ConnectGrepDataService {
-    @Override
-    public void setLatestUpdateDate(Document pageDoc) throws IOException {
-
-    }
 
     @Override
-    public List<Car> grepCarData(String url) throws IOException {
-        return null;
-    }
-
     public Flux<CarView> scrapWebData(String url) throws IOException {
 
         return getAllQueryUrl(url)
@@ -41,7 +33,7 @@ public class ConnectGrepDataServiceShowShi2Impl implements ConnectGrepDataServic
                                                     .timeout(10000)
                                                     .get();
                                         } catch (IOException e) {
-                                            throw new RuntimeException(e);
+                                            throw new FetchDataException(e, queryUrl);
                                         }
                                     })
                                     .publishOn(Schedulers.parallel());
@@ -70,11 +62,21 @@ public class ConnectGrepDataServiceShowShi2Impl implements ConnectGrepDataServic
                                                     .year(year)
                                                     .brand(brand)
                                                     .queryTime(LocalDateTime.now())
+                                                    .vendorType(VendorType.SHOU_SHI)
                                                     .build();
 
                                         }));
                             });
-                        });
+                        })
+                .onErrorContinue((e, o) -> {
+                    if (e instanceof FetchDataException fetchDataException) {
+                        log.error("Scraping {} fail, ex: {}",
+                                fetchDataException.getFetchUrl(),
+                                fetchDataException.getMessage());
+                    } else {
+                        log.error("Scraping fail, ex: {}", e.getMessage());
+                    }
+                });
     }
 
     public Flux<String> getAllQueryUrl(String url) throws IOException {

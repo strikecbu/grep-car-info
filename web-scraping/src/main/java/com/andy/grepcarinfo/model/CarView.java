@@ -19,6 +19,8 @@ public class CarView {
     private String detailUrl;
     private Integer year;
     private String brand;
+    private VendorType vendorType;
     private LocalDateTime queryTime;
+
 
 }

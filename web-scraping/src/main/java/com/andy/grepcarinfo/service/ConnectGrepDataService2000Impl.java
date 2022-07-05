@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
  * @since 2021/3/9
  */
 @Service
-public class ConnectGrepDataService2000Impl implements ConnectGrepDataService {
+public class ConnectGrepDataService2000Impl {
 
     final private static Logger LOGGER = LoggerFactory.getLogger(ConnectGrepDataServiceShouShiImpl.class);
 
@@ -40,7 +40,6 @@ public class ConnectGrepDataService2000Impl implements ConnectGrepDataService {
         LOGGER.info("更新最後更新日期： ");
     }
 
-    @Override
     public List<Car> grepCarData(String url) throws IOException {
         final Document doc = Jsoup.connect(url).timeout(60000).get();
         final Elements elements = doc.getElementById("article-content-inner").getElementsByTag("p");

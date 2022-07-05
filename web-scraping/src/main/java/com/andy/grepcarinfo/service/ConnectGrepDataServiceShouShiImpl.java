@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
  * @since 2021/2/20
  */
 @Service
-public class ConnectGrepDataServiceShouShiImpl implements ConnectGrepDataService {
+public class ConnectGrepDataServiceShouShiImpl {
 
     final private static Logger LOGGER = LoggerFactory.getLogger(ConnectGrepDataServiceShouShiImpl.class);
 
@@ -36,7 +36,6 @@ public class ConnectGrepDataServiceShouShiImpl implements ConnectGrepDataService
         this.updateInfo = updateInfo;
     }
 
-    @Override
     public void setLatestUpdateDate(Document pageDoc) throws IOException {
         for (Element element : pageDoc.getElementsByTag("meta")) {
             String attr = element.attr("name");
@@ -53,7 +52,6 @@ public class ConnectGrepDataServiceShouShiImpl implements ConnectGrepDataService
         }
     }
 
-    @Override
     public List<Car> grepCarData(String url) throws IOException {
         final Document doc = Jsoup.connect(url).timeout(60000).get();
         final Element content = doc.getElementsByAttributeValue("itemprop", "articleBody").get(0);
