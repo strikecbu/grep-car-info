@@ -1,5 +1,6 @@
 package com.andy.grepcarinfo.schedule;
 
+import com.andy.grepcarinfo.model.VendorType;
 import com.andy.grepcarinfo.service.CarInfoUpdateService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,8 +24,8 @@ public class UpdateCarInfoSchedule {
     // 啟動後10秒更新，之後每1小時更新
     @Scheduled(fixedDelay = 60 * 60 * 1000)
     public void update() throws IOException {
-        shouShiUpdateService.updateCarInfo(CarInfoUpdateService.Vendor.SHOU_SHI);
-        shouShiUpdateService.updateCarInfo(CarInfoUpdateService.Vendor.TWO_THOUSAND);
+        shouShiUpdateService.updateCarInfo(VendorType.SHOU_SHI);
+        shouShiUpdateService.updateCarInfo(VendorType.TWO_THOUSAND);
     }
 
 }

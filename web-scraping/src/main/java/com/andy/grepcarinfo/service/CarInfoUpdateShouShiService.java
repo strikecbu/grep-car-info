@@ -2,6 +2,7 @@ package com.andy.grepcarinfo.service;
 
 import com.andy.grepcarinfo.model.Car;
 import com.andy.grepcarinfo.model.Price;
+import com.andy.grepcarinfo.model.VendorType;
 import com.andy.grepcarinfo.repository.CarRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +30,7 @@ public class CarInfoUpdateShouShiService implements CarInfoUpdateService {
 
     @Override
     @Transactional
-    public void updateCarInfo(Vendor vendor) throws IOException {
+    public void updateCarInfo(VendorType vendor) throws IOException {
         long start = System.currentTimeMillis();
         final String url = vendor.getUrl();
         LOGGER.info("取得目標URL: {}", url);
