@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: car-eureka
+  config:
+    import: optional:configserver:http://localhost:8010
+app:
+  instance:
+    host: localhost
+eureka:
+  client:
+    fetch-registry: false
+    service-url:
+      defaultZone: http://${app.instance.host}:${server.port}/eureka
+    register-with-eureka: false
+  instance:
+    prefer-ip-address: true
+server:
+  port: 8011
