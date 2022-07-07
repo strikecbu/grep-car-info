@@ -2,7 +2,6 @@ package com.andy.grepcarinfo.service;
 
 import com.andy.grepcarinfo.model.Car;
 import com.andy.grepcarinfo.model.Price;
-import com.andy.grepcarinfo.model.UpdateInfo;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -29,28 +28,22 @@ public class ConnectGrepDataService2000Impl {
 
     final private static Logger LOGGER = LoggerFactory.getLogger(ConnectGrepDataServiceShouShiImpl.class);
 
-    final private UpdateInfo updateInfo;
-
-    public ConnectGrepDataService2000Impl(UpdateInfo updateInfo) {
-        this.updateInfo = updateInfo;
-    }
-
-    public void setLatestUpdateDate(Document pageDoc) throws IOException {
-//        itemprop="datePublished"
-        LOGGER.info("更新最後更新日期： ");
-    }
 
     public List<Car> grepCarData(String url) throws IOException {
-        final Document doc = Jsoup.connect(url).timeout(60000).get();
-        final Elements elements = doc.getElementById("article-content-inner").getElementsByTag("p");
+        final Document doc = Jsoup.connect(url)
+                .timeout(60000)
+                .get();
+        final Elements elements = doc.getElementById("article-content-inner")
+                .getElementsByTag("p");
         final ArrayList<Car> cars = new ArrayList<>();
         for (Element element : elements) {
             final String text = element.text();
-            if(text.contains("感謝新車主支持"))
+            if (text.contains("感謝新車主支持"))
                 break;
             //已售車輛
             String soldRegularStr = "^(\\d{4}年)\\s(.*)\\s賞車點此\\s(.*)感謝收訂$";
-            final Matcher soldMatch = Pattern.compile(soldRegularStr).matcher(text);
+            final Matcher soldMatch = Pattern.compile(soldRegularStr)
+                    .matcher(text);
             if (soldMatch.find()) {
                 final Car car = new Car();
                 car.setVendor("兩千");
@@ -65,10 +58,12 @@ public class ConnectGrepDataService2000Impl {
             }
             //等待銷售
             String regularStr = "^(\\d{4}年)\\s(.*)\\s(.*)萬\\s賞車點此\\s(.*)$";
-            final Matcher matcher = Pattern.compile(regularStr).matcher(text);
+            final Matcher matcher = Pattern.compile(regularStr)
+                    .matcher(text);
             if (matcher.find()) {
                 final Car car = new Car();
-                final String picUrl = element.getElementsByTag("a").attr("href");
+                final String picUrl = element.getElementsByTag("a")
+                        .attr("href");
                 car.setVendor("兩千");
                 final String years = matcher.group(1);
                 final String name = matcher.group(2);
@@ -87,7 +82,7 @@ public class ConnectGrepDataService2000Impl {
             }
         }
         LOGGER.info("共找到{}台汽車", cars.size());
-        setLatestUpdateDate(doc);
+//        setLatestUpdateDate(doc);
         return cars;
     }
 }

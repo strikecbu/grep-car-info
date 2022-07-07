@@ -1,2 +1,7 @@
 ###
 GET http://localhost:8080/carUpdate?type=SHOU_SHI
+
+
+### get configs
+GET http://localhost:8080/configs
+

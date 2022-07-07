@@ -2,7 +2,6 @@ package com.andy.grepcarinfo.Controller;
 
 import com.andy.grepcarinfo.model.Car;
 import com.andy.grepcarinfo.model.Price;
-import com.andy.grepcarinfo.model.UpdateInfo;
 import com.andy.grepcarinfo.repository.CarRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,12 +24,11 @@ import java.util.stream.StreamSupport;
 public class CarListController {
 
     final private CarRepository repository;
-    final private UpdateInfo updateInfo;
 
-    public CarListController(CarRepository repository, UpdateInfo updateInfo) {
+    public CarListController(CarRepository repository) {
         this.repository = repository;
-        this.updateInfo = updateInfo;
     }
+
 
     @RequestMapping("/list")
     public String list(Model model) {
@@ -86,7 +84,7 @@ public class CarListController {
         model.addAttribute("SOLD_CAR", soldCars);
         model.addAttribute("SHOU_SHI_CAR", shouShiCars);
         model.addAttribute("TWO_THOUSAND_CAR", twoThousandCars);
-        model.addAttribute("updateDate", updateInfo.getShiouShiDate());
+//        model.addAttribute("updateDate", updateInfo.getShiouShiDate());
         return "list";
     }
 }

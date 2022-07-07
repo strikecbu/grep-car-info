@@ -1,9 +1,8 @@
 package com.andy.grepcarinfo.config;
 
-import com.andy.grepcarinfo.model.UpdateInfo;
-import org.springframework.context.annotation.Bean;
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * @author AndyChen
@@ -13,11 +12,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * @since 2021/2/26
  */
 @Configuration
-@EnableScheduling
+@ConfigurationProperties(prefix = "scrap.shoushi")
+@Data
 public class ConfigBean {
 
-    @Bean
-    public UpdateInfo updateInfo() {
-        return new UpdateInfo();
-    }
+    private String url;
+
 }

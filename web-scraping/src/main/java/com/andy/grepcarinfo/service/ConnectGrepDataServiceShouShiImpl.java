@@ -2,7 +2,6 @@ package com.andy.grepcarinfo.service;
 
 import com.andy.grepcarinfo.model.Car;
 import com.andy.grepcarinfo.model.Price;
-import com.andy.grepcarinfo.model.UpdateInfo;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -30,31 +29,30 @@ public class ConnectGrepDataServiceShouShiImpl {
 
     final private static Logger LOGGER = LoggerFactory.getLogger(ConnectGrepDataServiceShouShiImpl.class);
 
-    final private UpdateInfo updateInfo;
-
-    public ConnectGrepDataServiceShouShiImpl(UpdateInfo updateInfo) {
-        this.updateInfo = updateInfo;
-    }
 
     public void setLatestUpdateDate(Document pageDoc) throws IOException {
         for (Element element : pageDoc.getElementsByTag("meta")) {
             String attr = element.attr("name");
-            if(!"keywords".equals(attr))
+            if (!"keywords".equals(attr))
                 continue;
             String content = element.attr("content");
             String reg = "(\\d{4}/\\d{2}/\\d{2})\\s更新出售中車輛";
-            Matcher matcher = Pattern.compile(reg).matcher(content);
+            Matcher matcher = Pattern.compile(reg)
+                    .matcher(content);
             if (matcher.find()) {
                 final String date = matcher.group(1);
                 LOGGER.info("更新最後更新日期： {}", date);
-                updateInfo.setShiouShiDate(date);
+//                updateInfo.setShiouShiDate(date);
             }
         }
     }
 
     public List<Car> grepCarData(String url) throws IOException {
-        final Document doc = Jsoup.connect(url).timeout(60000).get();
-        final Element content = doc.getElementsByAttributeValue("itemprop", "articleBody").get(0);
+        final Document doc = Jsoup.connect(url)
+                .timeout(60000)
+                .get();
+        final Element content = doc.getElementsByAttributeValue("itemprop", "articleBody")
+                .get(0);
         boolean listStart = false;
         List<List<Element>> list = new ArrayList<>();
         List<Element> infos = new ArrayList<>();
@@ -70,8 +68,10 @@ public class ConnectGrepDataServiceShouShiImpl {
             if (!listStart)
                 continue;
 
-            if (child.tag().getName().equals("hr")) {
-                if(infos.size() == 0) // avoid when start get info but hit hr first
+            if (child.tag()
+                    .getName()
+                    .equals("hr")) {
+                if (infos.size() == 0) // avoid when start get info but hit hr first
                     continue;
                 list.add(infos);
                 infos = new ArrayList<>();
@@ -87,14 +87,16 @@ public class ConnectGrepDataServiceShouShiImpl {
                         final Elements aTag = element.getElementsByTag("a");
                         String aTagUrl = null;
                         if (aTag.size() > 0) {
-                            aTagUrl = aTag.get(0).attr("href");
+                            aTagUrl = aTag.get(0)
+                                    .attr("href");
                         }
                         String text = element.text();
                         transTextToCar(car, aTagUrl, text);
                         car.setVendor("小施");
                     }
                     return car;
-                }).collect(Collectors.toList());
+                })
+                .collect(Collectors.toList());
         LOGGER.info("共找到{}台汽車", collect.size());
         setLatestUpdateDate(doc);
 
@@ -103,22 +105,27 @@ public class ConnectGrepDataServiceShouShiImpl {
 
     public void transTextToCar(Car car, String aTagUrl, String text) {
         String regEx = "(\\d{4}/\\d{4})\\s.*";
-        final Matcher matcher = Pattern.compile(regEx).matcher(text);
+        final Matcher matcher = Pattern.compile(regEx)
+                .matcher(text);
         if (matcher.find()) {
             final String year = matcher.group(1);
-            text = text.replace(year, "").trim();
+            text = text.replace(year, "")
+                    .trim();
             car.setYear(year);
             final String takeOrderKeyWord = "已收訂";
-            if(text.contains(takeOrderKeyWord)) {
+            if (text.contains(takeOrderKeyWord)) {
                 final String name = text.substring(0, text.indexOf(takeOrderKeyWord));
                 car.setSold(true);
                 car.setName(name);
             } else {
-                final Matcher priceMatcher = Pattern.compile("(.*)\\s(\\d+\\.?\\d*\\s?)萬\\s賞車按我").matcher(text);
+                final Matcher priceMatcher = Pattern.compile("(.*)\\s(\\d+\\.?\\d*\\s?)萬\\s賞車按我")
+                        .matcher(text);
                 if (priceMatcher.find()) {
-                    final String name = priceMatcher.group(1).trim();
+                    final String name = priceMatcher.group(1)
+                            .trim();
                     car.setName(name);
-                    final String priceStr = priceMatcher.group(2).trim();
+                    final String priceStr = priceMatcher.group(2)
+                            .trim();
                     final Price price = new Price();
                     price.setCar(car);
                     price.setPrice(Double.parseDouble(priceStr));
@@ -132,11 +139,12 @@ public class ConnectGrepDataServiceShouShiImpl {
             }
         } else {
             final String regex = "(規格配備)?按我參考";
-            text = text.replaceAll(regex, "").trim();
-            if(car.getDescription() == null)
+            text = text.replaceAll(regex, "")
+                    .trim();
+            if (car.getDescription() == null)
                 car.setDescription(text);
             //新車按我參考
-            if(car.getNewCarUrl() == null)
+            if (car.getNewCarUrl() == null)
                 car.setNewCarUrl(aTagUrl);
 
         }
