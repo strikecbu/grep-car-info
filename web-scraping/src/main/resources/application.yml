@@ -8,3 +8,10 @@ spring:
     import: optional:configserver:http://localhost:8010
   profiles:
     active: dev
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8011/eureka
+  instance:
+    prefer-ip-address: true
+    instance-id: car-scrap-${random.value}
