@@ -3,7 +3,7 @@ scrap:
     url: fillFromConfigServer
 spring:
   application:
-    name: car-scrap
+    name: web-scraping
   config:
     import: optional:configserver:http://localhost:8010
   profiles:
@@ -14,4 +14,4 @@ eureka:
       defaultZone: http://localhost:8011/eureka
   instance:
     prefer-ip-address: true
-    instance-id: car-scrap-${random.value}
+    instance-id: web-scraping-${random.value}
