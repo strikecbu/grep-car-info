@@ -1,3 +1,10 @@
 scrap:
   shoushi:
-    url: https://sscars.com.tw/car
+    url: fillFromConfigServer
+spring:
+  application:
+    name: car-scrap
+  config:
+    import: optional:configserver:http://localhost:8010
+  profiles:
+    active: dev

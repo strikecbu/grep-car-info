@@ -1,3 +1,4 @@
+
 spring:
   application:
     name: car-config
@@ -14,3 +15,5 @@ spring:
           password:
 encrypt:
   key: gggsxxxeet
+server:
+  port: 8010
