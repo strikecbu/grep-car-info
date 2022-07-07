@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: car-config
+  profiles:
+    active: git
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/strikecbu/car-config-file
+          username: strikecbu
+          default-label: main
+          clone-on-start: true
+          password:
+encrypt:
+  key: gggsxxxeet
