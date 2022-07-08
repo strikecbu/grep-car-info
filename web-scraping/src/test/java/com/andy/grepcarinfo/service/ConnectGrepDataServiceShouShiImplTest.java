@@ -15,7 +15,7 @@ class ConnectGrepDataServiceShouShiImplTest {
     void transTextToCar() {
         List<String[]> list = new ArrayList<>();
         final UpdateInfo updateInfo = new UpdateInfo();
-        final ConnectGrepDataServiceShouShiImpl service = new ConnectGrepDataServiceShouShiImpl(updateInfo);
+        final ConnectGrepDataServiceShouShiImpl service = new ConnectGrepDataServiceShouShiImpl();
         String[] sample1 = {"2020/2020 NISSAN SENTRA 四門 白色 1.6L 自排已收訂感恩深坑陳先生"};
         String[] sample2 =
                 {"2020/2020 LEXUS NX300 F SPORT 五門 白色 2.0T 手自排 179.8萬 賞車按我",

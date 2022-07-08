@@ -3,6 +3,7 @@ package com.andy.grepcarinfo.handler;
 import com.andy.grepcarinfo.model.CarView;
 import com.andy.grepcarinfo.model.VendorType;
 import com.andy.grepcarinfo.service.ConnectGrepDataService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,7 @@ import java.util.Arrays;
 import java.util.Optional;
 
 @Component
+@Slf4j
 public class CarUpdateHandler {
 
     private final ConnectGrepDataService dataService;
@@ -27,6 +29,9 @@ public class CarUpdateHandler {
     }
 
     public Mono<ServerResponse> updateCar(ServerRequest request) {
+        String correlationKey = request.headers()
+                .firstHeader("carinfo-correlation-key");
+        log.info("correlationKey: {}", correlationKey);
         Optional<String> type = request.queryParam("type");
         Optional<VendorType> vendorTypeOption = Arrays.stream(VendorType.values())
                 .filter(vt -> vt.toString()
