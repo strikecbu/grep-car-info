@@ -1,7 +1,11 @@
 package com.andy.grepcarinfo.model;
 
+import com.andy.grepcarinfo.consumer.ScrapeType;
 import com.andy.grepcarinfo.service.ConnectGrepDataService2000Impl;
 import com.andy.grepcarinfo.service.ConnectGrepDataServiceShouShiImpl;
+
+import java.util.Arrays;
+import java.util.Optional;
 
 public enum VendorType {
 
@@ -26,6 +30,13 @@ public enum VendorType {
 
     public void setUpdateDate() {
 
+    }
+
+    public static Optional<VendorType> values(String value) {
+        return Arrays.stream(VendorType.values())
+                .filter(type -> type.toString()
+                        .equals(value))
+                .findFirst();
     }
 
 }
