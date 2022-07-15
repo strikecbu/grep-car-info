@@ -2,6 +2,7 @@ package com.andy.grepcarinfo.handler;
 
 import com.andy.grepcarinfo.model.CarView;
 import com.andy.grepcarinfo.model.VendorType;
+import com.andy.grepcarinfo.producer.CarInfoProducer;
 import com.andy.grepcarinfo.service.ConnectGrepDataService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -11,6 +12,7 @@ import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.kafka.sender.SenderResult;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -21,11 +23,14 @@ import java.util.Optional;
 public class CarUpdateHandler {
 
     private final ConnectGrepDataService dataService;
+    private final CarInfoProducer carInfoProducer;
     @Value("${scrap.shoushi.url}")
     private String scrapShouShiUrl;
 
-    public CarUpdateHandler(@Qualifier("connectGrepDataServiceShowShi2Impl") ConnectGrepDataService dataService) {
+    public CarUpdateHandler(@Qualifier("connectGrepDataServiceShowShi2Impl") ConnectGrepDataService dataService,
+                            CarInfoProducer carInfoProducer) {
         this.dataService = dataService;
+        this.carInfoProducer = carInfoProducer;
     }
 
     public Mono<ServerResponse> updateCar(ServerRequest request) {
@@ -43,7 +48,9 @@ public class CarUpdateHandler {
         }
         Flux<CarView> carViewFlux = null;
         try {
-            carViewFlux = dataService.scrapWebData(scrapShouShiUrl);
+            Flux<CarView> viewFlux = dataService.scrapWebData(scrapShouShiUrl);
+            carViewFlux = carInfoProducer.sendEvent(viewFlux)
+                    .map(SenderResult::correlationMetadata);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
