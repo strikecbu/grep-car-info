@@ -29,7 +29,7 @@ class CarInfoServiceTest {
                 .queryTime(LocalDateTime.now())
                 .vendorType(VendorType.SHOU_SHI)
                 .build();
-        Mono<CarInfo> mono = carInfoService.saveOrUpdate(Mono.just(carInfo));
+        Mono<CarInfo> mono = carInfoService.saveOrUpdate(carInfo);
         StepVerifier.create(mono)
                 .consumeNextWith(carInfo1 -> {
                     assert carInfo1.getId() != null;

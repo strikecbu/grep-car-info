@@ -22,7 +22,7 @@ management:
 eureka:
   instance:
     prefer-ip-address: true
-    instance-id: car-gateway-${random.value}
+    instance-id: car-gateway-${spring.cloud.client.ip-address}:${server.port}
   client:
     service-url:
       defaultZone: http://localhost:8011/eureka

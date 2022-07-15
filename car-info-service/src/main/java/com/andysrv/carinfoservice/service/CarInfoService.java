@@ -26,8 +26,8 @@ public class CarInfoService {
         this.priceRepository = carPriceRepository;
     }
 
-    public Mono<CarInfo> saveOrUpdate(Publisher<CarInfo> publisher) {
-        return Mono.from(publisher)
+    public Mono<CarInfo> saveOrUpdate(CarInfo originCarInfo) {
+        return Mono.just(originCarInfo)
                 .flatMap(carInfo -> {
                     return infoRepository.findByTitleAndYear(carInfo.getTitle(), carInfo.getYear())
                             .defaultIfEmpty(carInfo)
