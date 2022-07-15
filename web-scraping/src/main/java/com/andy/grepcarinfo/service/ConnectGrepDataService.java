@@ -1,12 +1,9 @@
 package com.andy.grepcarinfo.service;
 
-import com.andy.grepcarinfo.model.Car;
 import com.andy.grepcarinfo.model.CarView;
-import org.jsoup.nodes.Document;
 import reactor.core.publisher.Flux;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
  * @author AndyChen
@@ -18,4 +15,5 @@ import java.util.List;
 public interface ConnectGrepDataService {
 
     Flux<CarView> scrapWebData(String url) throws IOException;
+
 }

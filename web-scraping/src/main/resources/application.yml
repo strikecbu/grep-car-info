@@ -1,6 +1,13 @@
 scrap:
   shoushi:
     url: fillFromConfigServer
+carinfo:
+  kafka:
+    producer:
+      topic: car-info-events
+    consumer:
+      topic: scrape-events
+
 spring:
   application:
     name: web-scraping
@@ -8,10 +15,21 @@ spring:
     import: optional:configserver:http://localhost:8010
   profiles:
     active: dev
+  kafka:
+    producer:
+      bootstrap-servers: localhost:29092,localhost:29093,localhost:29094
+    consumer:
+      bootstrap-servers: localhost:29092,localhost:29093,localhost:29094
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      group-id: scrape-events-group1
+    admin:
+      properties:
+        bootstrap.servers: localhost:29092,localhost:29093,localhost:29094
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8011/eureka
   instance:
     prefer-ip-address: true
-    instance-id: web-scraping-${random.value}
+    instance-id: web-scraping-${spring.cloud.client.ip-address}:${server.port}
