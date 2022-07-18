@@ -43,3 +43,8 @@ eureka:
   instance:
     prefer-ip-address: true
     instance-id: car-info-service-${spring.cloud.client.ip-address}:${server.port}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
