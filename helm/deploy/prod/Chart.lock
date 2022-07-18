@@ -1,0 +1,12 @@
+dependencies:
+- name: common
+  repository: file://../../common
+  version: 0.1.0
+- name: kafka
+  repository: file://../../services/kafka
+  version: 0.1.0
+- name: zookeeper
+  repository: file://../../services/zookeeper
+  version: 0.1.0
+digest: sha256:81b26c35a1b1ae1e175daef85eafebe60dfcc6b1daf0111854a05579361b2435
+generated: "2022-07-18T01:16:50.709068+08:00"

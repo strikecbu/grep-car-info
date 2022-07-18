@@ -1,0 +1,5 @@
+{{- template "common.service" . }}
+  - port: {{ .Values.service.externalPort1 }}
+    targetPort: {{ .Values.service.internalPort1 }}
+    protocol: TCP
+    name: {{ .Values.service.name1 | quote }}

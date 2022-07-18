@@ -1,0 +1,13 @@
+applicationName: kafka1
+replicaCount: 1
+
+image: bitnami/kafka:latest
+service:
+  type: NodePort
+  internalPort: 9092
+  externalPort: 9092
+  internalPort1: 29092
+  externalPort1: 29092
+  name1: client
+
+kafka1Env_enabled: true

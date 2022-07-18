@@ -1,0 +1,8 @@
+{{- define "common.configMap" }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.global.configMapName }}
+data:
+  
+{{- end }}

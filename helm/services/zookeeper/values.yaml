@@ -1,0 +1,10 @@
+applicationName: zookeeper
+replicaCount: 1
+
+image: bitnami/zookeeper:latest
+service:
+  type: ClusterIP
+  internalPort: 2181
+  externalPort: 2181
+
+zookeeperEnv_enabled: true
