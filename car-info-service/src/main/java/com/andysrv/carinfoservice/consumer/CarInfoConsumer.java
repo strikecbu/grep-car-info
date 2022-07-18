@@ -59,6 +59,9 @@ public class CarInfoConsumer implements CommandLineRunner {
                 })
                 .map(carInfoMapper::dtoToEntity)
                 .flatMap(carInfoService::saveOrUpdate)
-                .doOnNext(noop -> receiverRecord.receiverOffset().acknowledge());
+                .doOnNext(noop -> receiverRecord.receiverOffset().acknowledge())
+                .doOnError(throwable -> {
+                    String s = "";
+                });
     }
 }

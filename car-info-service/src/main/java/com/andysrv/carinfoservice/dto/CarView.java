@@ -15,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 public class CarView {
 
+    private String id;
     private String title;
     private List<CarPrice> prices;
     private CarPrice latestPrice;
