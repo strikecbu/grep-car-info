@@ -23,9 +23,9 @@ class CarInfoServiceTest {
     @Test
     void saveOrUpdate() {
         CarInfo carInfo = CarInfo.builder()
-                .title("2011 SuperCar sonic")
+                .title("2021 SuperCar sonic")
                 .year(2015)
-                .brand("BMW")
+                .brand("AUDI")
                 .price(1000000.0)
                 .queryTime(LocalDateTime.now())
                 .vendorType(VendorType.SHOU_SHI)

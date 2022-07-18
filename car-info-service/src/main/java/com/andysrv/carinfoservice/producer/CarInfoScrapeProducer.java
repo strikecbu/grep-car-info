@@ -1,5 +1,6 @@
 package com.andysrv.carinfoservice.producer;
 
+import com.andysrv.carinfoservice.dto.VendorType;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,8 +21,8 @@ public class CarInfoScrapeProducer {
         this.sender = sender;
     }
 
-    public void sendScrapeEvent() {
-        ProducerRecord<String, String> record = new ProducerRecord<>(topic, "CAR", "SHOU_SHI");
+    public void sendScrapeEvent(VendorType vendor) {
+        ProducerRecord<String, String> record = new ProducerRecord<>(topic, "CAR", vendor.toString());
         SenderRecord<String, String, String> senderRecord = SenderRecord.create(record, "SHOU_SHI");
         sender.send(Mono.just(senderRecord))
                 .single()

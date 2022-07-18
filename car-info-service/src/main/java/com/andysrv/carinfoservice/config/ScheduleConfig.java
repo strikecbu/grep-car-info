@@ -1,5 +1,6 @@
 package com.andysrv.carinfoservice.config;
 
+import com.andysrv.carinfoservice.dto.VendorType;
 import com.andysrv.carinfoservice.producer.CarInfoScrapeProducer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +22,7 @@ public class ScheduleConfig {
     @Scheduled(fixedDelayString = "${carinfo.schedule.scrape-car.fixedDelay}", initialDelay = 10000)
     public void sendScrapEventJob() {
         log.info("Schedule is on, send scrape-events");
-        producer.sendScrapeEvent();
+        producer.sendScrapeEvent(VendorType.SHOU_SHI);
     }
 
 }
