@@ -1,30 +1,27 @@
 package com.andysrv.carinfoservice.dto;
 
-import com.andysrv.carinfoservice.entity.CarPrice;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CarView {
+public class CarEvent {
 
     private String title;
-    private List<CarPrice> prices;
-    private CarPrice latestPrice;
+    private Double price;
     private String description;
     private String detailUrl;
     private Integer year;
     private String brand;
     private VendorType vendorType;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
     private LocalDateTime queryTime;
-    private LocalDateTime createTime;
-    private LocalDateTime updateTime;
 
 }

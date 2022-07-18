@@ -1,5 +1,6 @@
 package com.andysrv.carinfoservice.service;
 
+import com.andysrv.carinfoservice.dto.CarView;
 import com.andysrv.carinfoservice.dto.VendorType;
 import com.andysrv.carinfoservice.entity.CarInfo;
 import org.junit.jupiter.api.Test;
@@ -42,7 +43,7 @@ class CarInfoServiceTest {
 
     @Test
     void getAllCarInfo() {
-        Mono<List<CarInfo>> list$ = carInfoService.getAllCarInfo()
+        Mono<List<CarView>> list$ = carInfoService.getAllCarInfo()
                 .collectList();
         StepVerifier.create(list$)
                 .consumeNextWith(carInfos -> {

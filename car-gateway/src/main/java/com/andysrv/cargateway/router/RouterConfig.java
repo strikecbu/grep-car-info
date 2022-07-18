@@ -19,7 +19,16 @@ public class RouterConfig {
                                 .rewritePath("/carinfo/web-scraping/(?<path>.*)", "/${path}")
                                 .addResponseHeader("X-Response-Timestamp", new Date().toString())
                         )
-                        .uri("lb://WEB-SCRAPING"))
+                        .uri("lb://WEB-SCRAPING")
+                )
+                .route(spec -> spec
+                        .path("/car-info-service/**")
+                        .filters(filterSpec -> filterSpec
+                                .rewritePath("/car-info-service/(?<path>.*)", "/${path}")
+                                .addResponseHeader("X-Response-Timestamp", new Date().toString())
+                        )
+                        .uri("lb://CAR-INFO-SERVICE")
+                )
                 .build();
     }
 }

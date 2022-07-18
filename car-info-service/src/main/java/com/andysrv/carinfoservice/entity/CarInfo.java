@@ -38,5 +38,7 @@ public class CarInfo {
     private Double price;
     @Transient
     private List<CarPrice> prices;
+    @Transient
+    private CarPrice latestPrice;
 
 }

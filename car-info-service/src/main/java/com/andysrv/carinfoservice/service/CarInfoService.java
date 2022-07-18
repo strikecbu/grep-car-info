@@ -1,7 +1,9 @@
 package com.andysrv.carinfoservice.service;
 
+import com.andysrv.carinfoservice.dto.CarView;
 import com.andysrv.carinfoservice.entity.CarInfo;
 import com.andysrv.carinfoservice.entity.CarPrice;
+import com.andysrv.carinfoservice.mapper.CarInfoMapper;
 import com.andysrv.carinfoservice.repository.CarInfoRepository;
 import com.andysrv.carinfoservice.repository.CarPriceRepository;
 import org.bson.types.ObjectId;
@@ -21,10 +23,13 @@ public class CarInfoService {
 
     private final CarInfoRepository infoRepository;
     private final CarPriceRepository priceRepository;
+    private final CarInfoMapper carInfoMapper;
 
-    public CarInfoService(CarInfoRepository carInfoRepository, CarPriceRepository carPriceRepository) {
+    public CarInfoService(CarInfoRepository carInfoRepository, CarPriceRepository carPriceRepository,
+                          CarInfoMapper carInfoMapper) {
         this.infoRepository = carInfoRepository;
         this.priceRepository = carPriceRepository;
+        this.carInfoMapper = carInfoMapper;
     }
 
     public Mono<CarInfo> saveOrUpdate(CarInfo originCarInfo) {
@@ -71,17 +76,27 @@ public class CarInfoService {
                 });
     }
 
-    public Flux<CarInfo> getAllCarInfo() {
+    public Flux<CarView> getAllCarInfo() {
         return infoRepository.findAll()
                 .flatMap(carInfo -> priceRepository.findByIdIn(objectIdToString(carInfo.getPriceIds()))
                         .collectList()
                         .map(prices -> {
                             ArrayList<CarPrice> list = prices.stream()
+                                    .peek(price -> {
+                                        if (price.getId()
+                                                .equals(
+                                                        carInfo.getLatestPriceId()
+                                                                .toHexString())) {
+                                            carInfo.setLatestPrice(price);
+                                        }
+                                    })
                                     .sorted(Comparator.comparing(CarPrice::getCreateTime))
                                     .collect(Collectors.toCollection(ArrayList::new));
                             carInfo.setPrices(list);
                             return carInfo;
-                        }));
+                        })
+                        .map(carInfoMapper::entityToView)
+                );
     }
 
     private List<String> objectIdToString(List<ObjectId> list) {

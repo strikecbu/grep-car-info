@@ -1,4 +1,8 @@
 carinfo:
+  schedule:
+    scrape-car:
+#      fixedDelay: 99999999
+      fixedDelay: 300000
   kafka:
     producer:
       topic: scrape-events

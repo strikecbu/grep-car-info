@@ -1,6 +1,6 @@
 package com.andysrv.carinfoservice.consumer;
 
-import com.andysrv.carinfoservice.dto.CarView;
+import com.andysrv.carinfoservice.dto.CarEvent;
 import com.andysrv.carinfoservice.entity.CarInfo;
 import com.andysrv.carinfoservice.mapper.CarInfoMapper;
 import com.andysrv.carinfoservice.service.CarInfoService;
@@ -52,7 +52,7 @@ public class CarInfoConsumer implements CommandLineRunner {
                 .map(record -> {
                     String json = record.value();
                     try {
-                        return objectMapper.readValue(json, CarView.class);
+                        return objectMapper.readValue(json, CarEvent.class);
                     } catch (JsonProcessingException e) {
                         throw new RuntimeException(e);
                     }
