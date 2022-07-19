@@ -18,6 +18,7 @@ public class CarView {
     private Double price;
     private String description;
     private String detailUrl;
+    private String imageUrl;
     private Integer year;
     private String brand;
     private VendorType vendorType;

@@ -6,6 +6,7 @@ import com.andy.grepcarinfo.model.VendorType;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -40,10 +41,14 @@ public class ConnectGrepDataServiceShowShi2Impl implements ConnectGrepDataServic
 
                             return tMono.flatMapMany(document -> {
                                 log.info("Query url: {}", queryUrl);
-                                return Flux.fromStream(document.select(".box-text-products")
+                                return Flux.fromStream(document.select(".product-small.box")
                                         .stream()
                                         .parallel()
-                                        .map(element -> {
+                                        .map(parentEle -> {
+                                            Element element = parentEle.selectFirst(".box-text-products");
+                                            Element imgEle = parentEle.selectFirst("img");
+                                            String imageUrl = imgEle.attr("src");
+
                                             Elements aEle = element.select("a");
                                             String detailUrl = aEle.attr("href");
                                             String title = aEle.text();
@@ -61,10 +66,10 @@ public class ConnectGrepDataServiceShowShi2Impl implements ConnectGrepDataServic
                                                     .price(Double.parseDouble(price))
                                                     .year(year)
                                                     .brand(brand)
+                                                    .imageUrl(imageUrl)
                                                     .queryTime(LocalDateTime.now())
                                                     .vendorType(VendorType.SHOU_SHI)
                                                     .build();
-
                                         }));
                             });
                         })

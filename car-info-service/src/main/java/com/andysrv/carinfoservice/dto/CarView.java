@@ -21,6 +21,7 @@ public class CarView {
     private CarPrice latestPrice;
     private String description;
     private String detailUrl;
+    private String imageUrl;
     private Integer year;
     private String brand;
     private VendorType vendorType;

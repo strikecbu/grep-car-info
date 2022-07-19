@@ -58,8 +58,12 @@ public class CarInfoService {
                                                 }
                                             })
                                             .flatMap(savePrice -> {
-                                                car.setUpdateTime(LocalDateTime.now());
-                                                return infoRepository.save(car);
+                                                carInfo.setId(car.getId());
+                                                carInfo.setCreateTime(car.getCreateTime());
+                                                carInfo.setUpdateTime(LocalDateTime.now());
+                                                carInfo.setPrices(car.getPrices());
+                                                carInfo.setLatestPriceId(car.getLatestPriceId());
+                                                return infoRepository.save(carInfo);
                                             });
                                 } else {
                                     return priceRepository.save(price)
