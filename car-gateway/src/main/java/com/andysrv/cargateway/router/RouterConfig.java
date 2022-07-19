@@ -26,6 +26,7 @@ public class RouterConfig {
                         .filters(filterSpec -> filterSpec
                                 .rewritePath("/car-info-service/(?<path>.*)", "/${path}")
                                 .addResponseHeader("X-Response-Timestamp", new Date().toString())
+                                .addResponseHeader("Access-Control-Allow-Origin", "*")
                         )
                         .uri("lb://CAR-INFO-SERVICE")
                 )
