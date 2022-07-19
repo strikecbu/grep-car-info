@@ -61,7 +61,7 @@ public class CarInfoService {
                                                 carInfo.setId(car.getId());
                                                 carInfo.setCreateTime(car.getCreateTime());
                                                 carInfo.setUpdateTime(LocalDateTime.now());
-                                                carInfo.setPrices(car.getPrices());
+                                                carInfo.setPriceIds(car.getPriceIds());
                                                 carInfo.setLatestPriceId(car.getLatestPriceId());
                                                 return infoRepository.save(carInfo);
                                             });
