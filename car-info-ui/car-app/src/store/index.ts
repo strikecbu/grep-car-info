@@ -8,5 +8,5 @@ const store = configureStore({
         ui: uiSlice.reducer
     } });
 
-export default store;    
+export default store;
 
