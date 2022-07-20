@@ -4,15 +4,21 @@ import App from '../../App'
 import HomePage from './HomePage'
 import CarsPage from './CarsPage'
 import LoginPage from './LoginPage'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../store'
+import NotFoundPage from './NotFoundPage'
 
 const AppRoute: FunctionComponent = () => {
+    const token = useSelector((state: RootState) => state.account.token)
+
     return (
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<App />}>
                     <Route path="home" element={<HomePage />} />
-                    <Route path="cars" element={<CarsPage />} />
+                    {token && <Route path="cars" element={<CarsPage />} />}
                     <Route path="" element={<Navigate replace to="home" />} />
+                    <Route path="/*" element={<NotFoundPage />} />
                 </Route>
                 <Route path="/account">
                     <Route path="login" element={<LoginPage />} />

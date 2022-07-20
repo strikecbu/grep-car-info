@@ -9,6 +9,9 @@ import BannerNews from '../UI/BannerNews'
 import Header from '../Layout/Header'
 import moon from '../../images/moon.webp'
 import land from '../../images/land.webp'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../store'
+import { useLocation } from 'react-router-dom'
 
 const CarsPage: React.FC = () => {
     const ref = useRef<any>()
@@ -18,13 +21,18 @@ const CarsPage: React.FC = () => {
     const [detailUrl, setDetailUrl] = useState('')
     const [prices, setPrices] = useState<Price[]>([])
 
+    const token = useSelector((state: RootState) => state.account.token)
+
     useEffect(() => {
         fetchData()
     }, [])
 
     const fetchData = async () => {
         const response: Response = await fetch(Environment.fetchCarUrl, {
-            headers: {},
+            headers: new Headers({
+                Authorization: `Bearer ${token}`,
+            }),
+            method: 'GET',
         })
         const cars: Car[] = (await response.json()) as Car[]
         setCars(cars)
