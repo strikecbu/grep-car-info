@@ -10,27 +10,17 @@ export default () => {
                     <div className="flex items-center">
                         <a
                             href="/"
-                            aria-label="Company"
-                            title="Company"
+                            aria-label="AndySrv"
+                            title="AndySrv"
                             className="inline-flex items-center mr-8"
                         >
-                            <svg
-                                className="w-8 text-teal-accent-400"
-                                viewBox="0 0 24 24"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeMiterlimit="10"
-                                stroke="currentColor"
-                                fill="none"
-                            >
-                                <rect x="3" y="1" width="7" height="12" />
-                                <rect x="3" y="17" width="7" height="6" />
-                                <rect x="14" y="1" width="7" height="6" />
-                                <rect x="14" y="11" width="7" height="12" />
-                            </svg>
+                            <img
+                                className="w-7"
+                                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAB80lEQVQ4jWNkIAD698/N5mRlk7/36dmkLq/yJ+jyLPg0d+6ZFqAhLzeJmYmJie0VizQDA0M0uhomQi74z/AfxsAKmPFp3rNo6w1NRyv2H79/nHr19lXzvuU7P2NVmLu2UyZ3bacMNrn06j4TfOpZevbMDFCWll74n+E/g/yemfElLukbkBX//cuM4nh09Uw8XFwO3JycfDycXHxsjOxhSWWdvAwMDAwFMy4HVS9/eFlMx2dF3qzLgQwMDAxJZZ28rIxs4TD1PDyc9swWoY7vmJmYjb98//78xacPNd+fMbIZWHkqCMjqzBQUFNTg5OIS+v/3n4mGmuJxNlYWNnaZ3+dh6p++ed/OiCsAq5c/vCwgwK/DwMDA8PH9x8stUfJ62NThTAcf3r5sZvj3t4WBkenv+zdPpuJShxOkVk+0YmD4zwhjh4auwhrlWBNSVsNUHqZ/jB8YGBj/MzAwMEizvj8hrPbEGJtalDAo29Ypo8Qnlffm9bf/NYHp5chymZ2d6ipGIhlsHEwf3t552NmQ2PCDgQEtDNREZLvlxMQj5KT+/uvcOe14uXsWPE1oWYlFqMvKFTAwMDDc+P//PwMDQxNOL2AFTP+wCqO44Nabx6W/f/979OP39wfItjMwMDC8vfW488Zfxv+MDIz/39191A0TBwB+SLeKE/NZ3QAAAABJRU5ErkJggg=="
+                                alt="AndySRV"
+                            />
                             <span className="ml-2 text-xl font-bold tracking-wide text-gray-100 uppercase">
-                                Company
+                                AndySRV
                             </span>
                         </a>
                         <ul className="flex items-center hidden space-x-8 lg:flex">
@@ -130,47 +120,17 @@ export default () => {
                                         <div>
                                             <a
                                                 href="/"
-                                                aria-label="Company"
-                                                title="Company"
+                                                aria-label="AndySrv"
+                                                title="AndySrv"
                                                 className="inline-flex items-center"
                                             >
-                                                <svg
-                                                    className="w-8 text-deep-purple-accent-400"
-                                                    viewBox="0 0 24 24"
-                                                    strokeLinejoin="round"
-                                                    strokeWidth="2"
-                                                    strokeLinecap="round"
-                                                    strokeMiterlimit="10"
-                                                    stroke="currentColor"
-                                                    fill="none"
-                                                >
-                                                    <rect
-                                                        x="3"
-                                                        y="1"
-                                                        width="7"
-                                                        height="12"
-                                                    />
-                                                    <rect
-                                                        x="3"
-                                                        y="17"
-                                                        width="7"
-                                                        height="6"
-                                                    />
-                                                    <rect
-                                                        x="14"
-                                                        y="1"
-                                                        width="7"
-                                                        height="6"
-                                                    />
-                                                    <rect
-                                                        x="14"
-                                                        y="11"
-                                                        width="7"
-                                                        height="12"
-                                                    />
-                                                </svg>
+                                                <img
+                                                    className="w-7"
+                                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAB80lEQVQ4jWNkIAD698/N5mRlk7/36dmkLq/yJ+jyLPg0d+6ZFqAhLzeJmYmJie0VizQDA0M0uhomQi74z/AfxsAKmPFp3rNo6w1NRyv2H79/nHr19lXzvuU7P2NVmLu2UyZ3bacMNrn06j4TfOpZevbMDFCWll74n+E/g/yemfElLukbkBX//cuM4nh09Uw8XFwO3JycfDycXHxsjOxhSWWdvAwMDAwFMy4HVS9/eFlMx2dF3qzLgQwMDAxJZZ28rIxs4TD1PDyc9swWoY7vmJmYjb98//78xacPNd+fMbIZWHkqCMjqzBQUFNTg5OIS+v/3n4mGmuJxNlYWNnaZ3+dh6p++ed/OiCsAq5c/vCwgwK/DwMDA8PH9x8stUfJ62NThTAcf3r5sZvj3t4WBkenv+zdPpuJShxOkVk+0YmD4zwhjh4auwhrlWBNSVsNUHqZ/jB8YGBj/MzAwMEizvj8hrPbEGJtalDAo29Ypo8Qnlffm9bf/NYHp5chymZ2d6ipGIhlsHEwf3t552NmQ2PCDgQEtDNREZLvlxMQj5KT+/uvcOe14uXsWPE1oWYlFqMvKFTAwMDDc+P//PwMDQxNOL2AFTP+wCqO44Nabx6W/f/979OP39wfItjMwMDC8vfW488Zfxv+MDIz/39191A0TBwB+SLeKE/NZ3QAAAABJRU5ErkJggg=="
+                                                    alt="AndySRV"
+                                                />
                                                 <span className="ml-2 text-xl font-bold tracking-wide text-gray-800 uppercase">
-                                                    Company
+                                                    ANDYSRV
                                                 </span>
                                             </a>
                                         </div>

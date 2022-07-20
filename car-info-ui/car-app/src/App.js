@@ -30,9 +30,7 @@ function App() {
     console.log('App init')
     return (
         <Fragment>
-            <BannerNews announceWords={'Welcome to brand new website!'} />
             <Outlet />
-            <Footer />
         </Fragment>
     )
 }
