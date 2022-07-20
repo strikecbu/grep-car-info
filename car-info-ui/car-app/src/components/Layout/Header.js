@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { NavLink } from 'react-router-dom'
 
 export default () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -8,74 +9,47 @@ export default () => {
             <div className="px-4 py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
                 <div className="relative flex items-center justify-between">
                     <div className="flex items-center">
-                        <a
-                            href="/"
-                            aria-label="AndySrv"
-                            title="AndySrv"
+                        <NavLink
                             className="inline-flex items-center mr-8"
+                            to="/home"
                         >
                             <img
                                 className="w-7"
+                                loading={'eager'}
                                 src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAB80lEQVQ4jWNkIAD698/N5mRlk7/36dmkLq/yJ+jyLPg0d+6ZFqAhLzeJmYmJie0VizQDA0M0uhomQi74z/AfxsAKmPFp3rNo6w1NRyv2H79/nHr19lXzvuU7P2NVmLu2UyZ3bacMNrn06j4TfOpZevbMDFCWll74n+E/g/yemfElLukbkBX//cuM4nh09Uw8XFwO3JycfDycXHxsjOxhSWWdvAwMDAwFMy4HVS9/eFlMx2dF3qzLgQwMDAxJZZ28rIxs4TD1PDyc9swWoY7vmJmYjb98//78xacPNd+fMbIZWHkqCMjqzBQUFNTg5OIS+v/3n4mGmuJxNlYWNnaZ3+dh6p++ed/OiCsAq5c/vCwgwK/DwMDA8PH9x8stUfJ62NThTAcf3r5sZvj3t4WBkenv+zdPpuJShxOkVk+0YmD4zwhjh4auwhrlWBNSVsNUHqZ/jB8YGBj/MzAwMEizvj8hrPbEGJtalDAo29Ypo8Qnlffm9bf/NYHp5chymZ2d6ipGIhlsHEwf3t552NmQ2PCDgQEtDNREZLvlxMQj5KT+/uvcOe14uXsWPE1oWYlFqMvKFTAwMDDc+P//PwMDQxNOL2AFTP+wCqO44Nabx6W/f/979OP39wfItjMwMDC8vfW488Zfxv+MDIz/39191A0TBwB+SLeKE/NZ3QAAAABJRU5ErkJggg=="
                                 alt="AndySRV"
                             />
                             <span className="ml-2 text-xl font-bold tracking-wide text-gray-100 uppercase">
                                 AndySRV
                             </span>
-                        </a>
+                        </NavLink>
                         <ul className="flex items-center hidden space-x-8 lg:flex">
                             <li>
-                                <a
-                                    href="/"
-                                    aria-label="Our product"
-                                    title="Our product"
-                                    className="font-medium tracking-wide text-gray-100 transition-colors duration-200 hover:text-teal-accent-400"
+                                <NavLink
+                                    className="font-medium tracking-wide text-gray-100 transition-colors duration-200 hover:text-teal-400"
+                                    to="/cars"
                                 >
-                                    Product
-                                </a>
+                                    價格趨勢
+                                </NavLink>
                             </li>
                             <li>
-                                <a
-                                    href="/"
-                                    aria-label="Our product"
-                                    title="Our product"
-                                    className="font-medium tracking-wide text-gray-100 transition-colors duration-200 hover:text-teal-accent-400"
-                                >
-                                    Features
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    href="/"
-                                    aria-label="Product pricing"
-                                    title="Product pricing"
-                                    className="font-medium tracking-wide text-gray-100 transition-colors duration-200 hover:text-teal-accent-400"
-                                >
-                                    Pricing
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    href="/"
-                                    aria-label="About us"
-                                    title="About us"
-                                    className="font-medium tracking-wide text-gray-100 transition-colors duration-200 hover:text-teal-accent-400"
+                                <NavLink
+                                    className="font-medium tracking-wide text-gray-100 transition-colors duration-200 hover:text-teal-400"
+                                    to="/home"
                                 >
                                     About us
-                                </a>
+                                </NavLink>
                             </li>
                         </ul>
                     </div>
                     <ul className="flex items-center hidden space-x-8 lg:flex">
                         <li>
-                            <a
-                                href="/"
-                                aria-label="Sign in"
-                                title="Sign in"
-                                className="font-medium tracking-wide text-gray-100 transition-colors duration-200 hover:text-teal-accent-400"
+                            <NavLink
+                                className="font-medium tracking-wide text-gray-100 transition-colors duration-200 hover:text-teal-400"
+                                to="/account/login"
                             >
                                 Sign in
-                            </a>
+                            </NavLink>
                         </li>
                         <li>
                             <a
@@ -114,8 +88,8 @@ export default () => {
                             </svg>
                         </button>
                         {isMenuOpen && (
-                            <div className="absolute top-0 left-0 w-full">
-                                <div className="p-5 bg-white border rounded shadow-sm">
+                            <div className="absolute top-0 left-0 w-full z-20">
+                                <div className="p-5 bg-white border rounded shadow-sm ">
                                     <div className="flex items-center justify-between mb-4">
                                         <div>
                                             <a
@@ -158,59 +132,33 @@ export default () => {
                                     <nav>
                                         <ul className="space-y-4">
                                             <li>
-                                                <a
-                                                    href="/"
-                                                    aria-label="Our product"
-                                                    title="Our product"
-                                                    className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                                                <NavLink
+                                                    className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-purple-400"
+                                                    to="/cars"
                                                 >
-                                                    Product
-                                                </a>
+                                                    價格趨勢
+                                                </NavLink>
                                             </li>
                                             <li>
-                                                <a
-                                                    href="/"
-                                                    aria-label="Our product"
-                                                    title="Our product"
-                                                    className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
-                                                >
-                                                    Features
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a
-                                                    href="/"
-                                                    aria-label="Product pricing"
-                                                    title="Product pricing"
-                                                    className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
-                                                >
-                                                    Pricing
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a
-                                                    href="/"
-                                                    aria-label="About us"
-                                                    title="About us"
-                                                    className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                                                <NavLink
+                                                    className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-purple-400"
+                                                    to="/home"
                                                 >
                                                     About us
-                                                </a>
+                                                </NavLink>
                                             </li>
                                             <li>
-                                                <a
-                                                    href="/"
-                                                    aria-label="Sign in"
-                                                    title="Sign in"
-                                                    className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                                                <NavLink
+                                                    className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-purple-400"
+                                                    to="/account/login"
                                                 >
                                                     Sign in
-                                                </a>
+                                                </NavLink>
                                             </li>
                                             <li>
                                                 <a
                                                     href="/"
-                                                    className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
+                                                    className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-purple-400 hover:bg-purple-700 focus:shadow-outline focus:outline-none"
                                                     aria-label="Sign up"
                                                     title="Sign up"
                                                 >
