@@ -1,5 +1,8 @@
 package com.andysrv.cargateway.router;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
@@ -9,6 +12,10 @@ import java.util.Date;
 
 @Configuration
 public class RouterConfig {
+
+    @Autowired
+    @Qualifier("verifyFirebaseTokenFilter")
+    GatewayFilter verifyFirebaseTokenFilter;
 
     @Bean
     public RouteLocator route(RouteLocatorBuilder builder) {
@@ -26,7 +33,7 @@ public class RouterConfig {
                         .filters(filterSpec -> filterSpec
                                 .rewritePath("/car-info-service/(?<path>.*)", "/${path}")
                                 .addResponseHeader("X-Response-Timestamp", new Date().toString())
-                                .addResponseHeader("Access-Control-Allow-Origin", "*")
+                                .filter(verifyFirebaseTokenFilter)
                         )
                         .uri("lb://CAR-INFO-SERVICE")
                 )
