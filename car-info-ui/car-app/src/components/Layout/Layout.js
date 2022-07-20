@@ -1,6 +1,7 @@
 import { Fragment } from 'react'
 import Header from './Header'
 import BannerNews from '../UI/BannerNews'
+import { Footer } from '../UI/Footer'
 
 const Layout = (props) => {
     return (
@@ -9,6 +10,7 @@ const Layout = (props) => {
             <Header />
             {/*<MainHeader />*/}
             <main>{props.children}</main>
+            <Footer />
         </Fragment>
     )
 }
