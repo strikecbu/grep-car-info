@@ -25,7 +25,6 @@ function App() {
         }
     }, [cart, dispatch])
 
-    console.log('App init')
     return (
         <Fragment>
             <Outlet />

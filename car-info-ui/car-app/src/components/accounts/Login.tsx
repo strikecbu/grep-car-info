@@ -10,6 +10,9 @@ import React, { useRef, useState } from 'react'
 import Environment from '../../env/Environment'
 import { initializeApp } from 'firebase/app'
 import { ClipLoader } from 'react-spinners'
+import { useDispatch } from 'react-redux'
+import { AccountActions } from '../../store/account-slice'
+import { AppDispatch } from '../../store'
 
 const firebaseConfig = {
     apiKey: Environment.apiKey,
@@ -26,6 +29,7 @@ export default function Login() {
     const isLogin = location.pathname.includes('login')
     const emailRef = useRef<HTMLInputElement | null>(null)
     const passwordRef = useRef<HTMLInputElement | null>(null)
+    const dispatch: AppDispatch = useDispatch()
     const [message, setMessage] = useState<string>('')
     const [isLoading, setLoading] = useState(false)
 
@@ -37,9 +41,9 @@ export default function Login() {
         const password = passwordRef.current!.value
 
         if (isLogin) {
-            loginHandle(email, password)
+            await loginHandle(email, password)
         } else {
-            signupHandle(email, password)
+            await signupHandle(email, password)
         }
     }
 
@@ -60,10 +64,12 @@ export default function Login() {
             setLoading(false)
             const user = userCredential.user
             if (!user.emailVerified) {
-                setMessage('尚未驗證信箱，請先驗證後，再嘗試登錄')
+                setMessage('尚未驗證信箱，請先驗證後，再嘗試登入')
                 clearInputs()
                 return
             }
+            const token = await user.getIdToken()
+            dispatch(AccountActions.addToken(token))
             navigate('/home', { replace: true })
         } catch (e: any) {
             setMessage('帳號或密碼錯誤，請再重試')
@@ -83,7 +89,7 @@ export default function Login() {
             const user = userCredential.user
             await sendEmailVerification(user)
             setLoading(false)
-            setMessage('請先收取驗證信件後，再嘗試登錄')
+            setMessage('請先收取驗證信件後，再嘗試登入')
             clearInputs()
             navigate('../login', { replace: true })
         } catch (e: any) {
@@ -98,7 +104,7 @@ export default function Login() {
                 <div className="max-w-md w-full space-y-8">
                     <div>
                         <h2 className="mt-6 text-center tracking-widest text-3xl font-extrabold text-gray-900">
-                            {isLogin ? '登錄' : '註冊'}你的帳號
+                            {isLogin ? '登入' : '註冊'}你的帳號
                         </h2>
                         <p className="mt-2 text-center text-sm text-gray-600">
                             Or{'  '}
@@ -114,7 +120,7 @@ export default function Login() {
                                     className="font-medium text-indigo-600 hover:text-indigo-500"
                                     to="/account/login"
                                 >
-                                    登錄
+                                    登入
                                 </NavLink>
                             )}
                         </p>
@@ -209,7 +215,7 @@ export default function Login() {
 
                                     {isLoading && <ClipLoader size={20} />}
                                 </span>
-                                {isLogin ? '登錄' : '註冊'}
+                                {isLogin ? '登入' : '註冊'}
                             </button>
                         </div>
                     </form>

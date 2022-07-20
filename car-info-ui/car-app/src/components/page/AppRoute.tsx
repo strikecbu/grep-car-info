@@ -5,8 +5,6 @@ import HomePage from './HomePage'
 import CarsPage from './CarsPage'
 import LoginPage from './LoginPage'
 
-type Props = {}
-
 const AppRoute: FunctionComponent = () => {
     return (
         <BrowserRouter>

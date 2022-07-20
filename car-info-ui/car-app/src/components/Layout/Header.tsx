@@ -1,8 +1,18 @@
-import { useState } from 'react'
+import { Fragment, useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '../../store'
+import { AccountActions } from '../../store/account-slice'
 
 export default () => {
+    const token = useSelector((state: RootState) => state.account.token)
+    const dispatch: AppDispatch = useDispatch()
     const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+    function logout() {
+        dispatch(AccountActions.removeToken())
+        console.log('logout now')
+    }
 
     return (
         <div className="bg-gray-900">
@@ -24,14 +34,17 @@ export default () => {
                             </span>
                         </NavLink>
                         <ul className="flex items-center hidden space-x-8 lg:flex">
-                            <li>
-                                <NavLink
-                                    className="font-medium tracking-wide text-gray-100 transition-colors duration-200 hover:text-teal-400"
-                                    to="/cars"
-                                >
-                                    價格趨勢
-                                </NavLink>
-                            </li>
+                            {token && (
+                                <li>
+                                    <NavLink
+                                        className="font-medium tracking-wide text-gray-100 transition-colors duration-200 hover:text-teal-400"
+                                        to="/cars"
+                                    >
+                                        價格趨勢
+                                    </NavLink>
+                                </li>
+                            )}
+
                             <li>
                                 <NavLink
                                     className="font-medium tracking-wide text-gray-100 transition-colors duration-200 hover:text-teal-400"
@@ -43,24 +56,38 @@ export default () => {
                         </ul>
                     </div>
                     <ul className="flex items-center hidden space-x-8 lg:flex">
-                        <li>
-                            <NavLink
-                                className="font-medium tracking-wide text-gray-100 transition-colors duration-200 hover:text-teal-400"
-                                to="/account/login"
-                            >
-                                Sign in
-                            </NavLink>
-                        </li>
-                        <li>
-                            <a
-                                href="/"
-                                className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-purple-800 hover:bg-purple-400 focus:shadow-outline focus:outline-none"
-                                aria-label="Sign up"
-                                title="Sign up"
-                            >
-                                Sign up
-                            </a>
-                        </li>
+                        {!token && (
+                            <Fragment>
+                                <li>
+                                    <NavLink
+                                        className="font-medium tracking-wide text-gray-100 transition-colors duration-200 hover:text-teal-400"
+                                        to="/account/login"
+                                    >
+                                        登入
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink
+                                        className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-purple-800 hover:bg-purple-400 focus:shadow-outline focus:outline-none"
+                                        to="/account/signup"
+                                    >
+                                        註冊
+                                    </NavLink>
+                                </li>
+                            </Fragment>
+                        )}
+
+                        {token && (
+                            <li>
+                                <NavLink
+                                    className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-purple-800 hover:bg-purple-400 focus:shadow-outline focus:outline-none"
+                                    to="/home"
+                                    onClick={logout}
+                                >
+                                    登出
+                                </NavLink>
+                            </li>
+                        )}
                     </ul>
                     <div className="lg:hidden">
                         <button
@@ -131,14 +158,17 @@ export default () => {
                                     </div>
                                     <nav>
                                         <ul className="space-y-4">
-                                            <li>
-                                                <NavLink
-                                                    className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-purple-400"
-                                                    to="/cars"
-                                                >
-                                                    價格趨勢
-                                                </NavLink>
-                                            </li>
+                                            {token && (
+                                                <li>
+                                                    <NavLink
+                                                        className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-purple-400"
+                                                        to="/cars"
+                                                    >
+                                                        價格趨勢
+                                                    </NavLink>
+                                                </li>
+                                            )}
+
                                             <li>
                                                 <NavLink
                                                     className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-purple-400"
@@ -147,24 +177,37 @@ export default () => {
                                                     About us
                                                 </NavLink>
                                             </li>
-                                            <li>
-                                                <NavLink
-                                                    className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-purple-400"
-                                                    to="/account/login"
-                                                >
-                                                    Sign in
-                                                </NavLink>
-                                            </li>
-                                            <li>
-                                                <a
-                                                    href="/"
-                                                    className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-purple-400 hover:bg-purple-700 focus:shadow-outline focus:outline-none"
-                                                    aria-label="Sign up"
-                                                    title="Sign up"
-                                                >
-                                                    Sign up
-                                                </a>
-                                            </li>
+                                            {!token && (
+                                                <Fragment>
+                                                    <li>
+                                                        <NavLink
+                                                            className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-purple-400"
+                                                            to="/account/login"
+                                                        >
+                                                            登入
+                                                        </NavLink>
+                                                    </li>
+                                                    <li>
+                                                        <NavLink
+                                                            className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-purple-400 hover:bg-purple-700 focus:shadow-outline focus:outline-none"
+                                                            to="/account/signup"
+                                                        >
+                                                            註冊
+                                                        </NavLink>
+                                                    </li>
+                                                </Fragment>
+                                            )}
+                                            {token && (
+                                                <li>
+                                                    <NavLink
+                                                        className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-purple-400 hover:bg-purple-700 focus:shadow-outline focus:outline-none"
+                                                        to="/home"
+                                                        onClick={logout}
+                                                    >
+                                                        登出
+                                                    </NavLink>
+                                                </li>
+                                            )}
                                         </ul>
                                     </nav>
                                 </div>
