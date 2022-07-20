@@ -1,26 +1,96 @@
-/*
-  This example requires Tailwind CSS v2.0+
-
-  This example requires some changes to your config:
-
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
+import {
+    createUserWithEmailAndPassword,
+    getAuth,
+    sendEmailVerification,
+    signInWithEmailAndPassword,
+} from 'firebase/auth'
 import { LockClosedIcon } from '@heroicons/react/solid'
-import { NavLink, useLocation } from 'react-router-dom'
-import { useState } from 'react'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
+import React, { useRef, useState } from 'react'
+import Environment from '../../env/Environment'
+import { initializeApp } from 'firebase/app'
+import { ClipLoader } from 'react-spinners'
+
+const firebaseConfig = {
+    apiKey: Environment.apiKey,
+    authDomain: Environment.authDomain,
+    projectId: Environment.projectId,
+    messagingSenderId: Environment.messagingSenderId,
+}
+
+const app = initializeApp(firebaseConfig)
 
 export default function Login() {
     const location = useLocation()
+    const navigate = useNavigate()
     const isLogin = location.pathname.includes('login')
+    const emailRef = useRef<HTMLInputElement | null>(null)
+    const passwordRef = useRef<HTMLInputElement | null>(null)
+    const [message, setMessage] = useState<string>('')
+    const [isLoading, setLoading] = useState(false)
+
+    async function handleSubmit(
+        e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    ) {
+        e.preventDefault()
+        const email = emailRef.current!.value
+        const password = passwordRef.current!.value
+
+        if (isLogin) {
+            loginHandle(email, password)
+        } else {
+            signupHandle(email, password)
+        }
+    }
+
+    function clearInputs() {
+        emailRef.current!.value = ''
+        passwordRef.current!.value = ''
+    }
+
+    async function loginHandle(email: string, password: string) {
+        try {
+            setLoading(true)
+            const auth = getAuth(app)
+            const userCredential = await signInWithEmailAndPassword(
+                auth,
+                email,
+                password
+            )
+            setLoading(false)
+            const user = userCredential.user
+            if (!user.emailVerified) {
+                setMessage('尚未驗證信箱，請先驗證後，再嘗試登錄')
+                clearInputs()
+                return
+            }
+            navigate('/home', { replace: true })
+        } catch (e: any) {
+            setMessage('帳號或密碼錯誤，請再重試')
+            setLoading(false)
+        }
+    }
+
+    async function signupHandle(email: string, password: string) {
+        try {
+            setLoading(true)
+            const auth = getAuth(app)
+            const userCredential = await createUserWithEmailAndPassword(
+                auth,
+                email,
+                password
+            )
+            const user = userCredential.user
+            await sendEmailVerification(user)
+            setLoading(false)
+            setMessage('請先收取驗證信件後，再嘗試登錄')
+            clearInputs()
+            navigate('../login', { replace: true })
+        } catch (e: any) {
+            setMessage(e.message && e.message.replaceAll('Firebase:', ''))
+            setLoading(false)
+        }
+    }
 
     return (
         <div className="h-[65vh] bg-gray-50">
@@ -64,6 +134,7 @@ export default function Login() {
                                     Email address
                                 </label>
                                 <input
+                                    ref={emailRef}
                                     id="email-address"
                                     name="email"
                                     type="email"
@@ -78,6 +149,7 @@ export default function Login() {
                                     Password
                                 </label>
                                 <input
+                                    ref={passwordRef}
                                     id="password"
                                     name="password"
                                     type="password"
@@ -115,16 +187,27 @@ export default function Login() {
                         {/*    </div>*/}
                         {/*</div>*/}
 
+                        {message && (
+                            <div className="flex items-center justify-center text-red-600">
+                                <div>{message}</div>
+                            </div>
+                        )}
+
                         <div>
                             <button
                                 type="submit"
                                 className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                onClick={handleSubmit}
                             >
                                 <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                                    <LockClosedIcon
-                                        className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
-                                        aria-hidden="true"
-                                    />
+                                    {!isLoading && (
+                                        <LockClosedIcon
+                                            className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
+                                            aria-hidden="true"
+                                        />
+                                    )}
+
+                                    {isLoading && <ClipLoader size={20} />}
                                 </span>
                                 {isLogin ? '登錄' : '註冊'}
                             </button>

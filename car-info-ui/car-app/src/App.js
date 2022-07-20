@@ -1,8 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { Fragment, useEffect } from 'react'
 import { fetchCartData, sendCartData } from './store/cart-slice'
-import { Footer } from './components/UI/Footer'
-import BannerNews from './components/UI/BannerNews'
 import { Outlet } from 'react-router-dom'
 
 let isInitial = true
