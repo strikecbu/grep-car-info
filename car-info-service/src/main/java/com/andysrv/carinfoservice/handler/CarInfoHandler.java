@@ -1,5 +1,6 @@
 package com.andysrv.carinfoservice.handler;
 
+import com.andysrv.carinfoservice.dto.ReScrapeRequest;
 import com.andysrv.carinfoservice.dto.VendorType;
 import com.andysrv.carinfoservice.producer.CarInfoScrapeProducer;
 import com.andysrv.carinfoservice.service.CarInfoService;
@@ -7,8 +8,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
-
-import java.util.Optional;
 
 @Component
 public class CarInfoHandler {
@@ -29,15 +28,18 @@ public class CarInfoHandler {
     }
 
     public Mono<ServerResponse> sendScrapeEvent(ServerRequest request) {
-        String vendor = request.queryParam("vendor").orElse("");
-        Optional<VendorType> vendorType = VendorType.values(vendor);
-        if (vendorType
-                .isEmpty()) {
-            return ServerResponse.badRequest()
-                    .bodyValue("Not available vendor");
-        }
-        scrapeProducer.sendScrapeEvent(vendorType.get());
-        return ServerResponse.accepted()
-                .build();
+        return request.bodyToMono(ReScrapeRequest.class)
+                .map(ReScrapeRequest::getVendor)
+                .map(VendorType::values)
+                .flatMap(vendorType -> {
+                    if (vendorType.isEmpty()) {
+                        return Mono.error(new RuntimeException("Not available vendor"));
+                    }
+                    scrapeProducer.sendScrapeEvent(vendorType.get());
+                    return ServerResponse.accepted()
+                            .build();
+                })
+                .onErrorResume(throwable -> ServerResponse.badRequest()
+                        .bodyValue(throwable.getMessage()));
     }
 }

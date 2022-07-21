@@ -16,7 +16,7 @@ public class RouterConfig {
         return RouterFunctions.route()
                 .nest(path("/cloudcar"), builder -> {
                     builder.GET("cars", handler::getAllCars)
-                            .POST("updateCars", handler::sendScrapeEvent);
+                            .POST("reScrape", handler::sendScrapeEvent);
                 })
                 .build();
     }
