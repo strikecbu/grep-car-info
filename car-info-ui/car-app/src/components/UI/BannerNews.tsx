@@ -1,36 +1,46 @@
 /* This example requires Tailwind CSS v2.0+ */
-import {SpeakerphoneIcon, XIcon} from '@heroicons/react/outline'
-import React, {Fragment, useState} from "react";
+import { SpeakerphoneIcon, XIcon } from '@heroicons/react/outline'
+import React, { Fragment, useEffect, useState } from 'react'
+import { useAnnounce, State } from '../../hooks/announceHook'
 
 export type Props = {
     announceWords: string
 }
 
-const BannerNews: React.FC<Props> = ({announceWords}) => {
-    const [show, setShow] = useState(true);
-
+const BannerNews: React.FC<Props> = ({ announceWords }) => {
+    const [show, setShow] = useState(true)
+    const [state, setMessage] = useAnnounce()
 
     function handleClose() {
         setShow(!show)
-        setTimeout(() => {
-            setShow(true);
-        }, 5000)
     }
+
+    useEffect(() => {
+        setMessage(announceWords)
+    }, [])
+
+    useEffect(() => {
+        setShow(true)
+    }, [state])
 
     return (
         <Fragment>
-            {show &&
+            {show && (
                 <div className="bg-indigo-600">
                     <div className="max-w-7xl mx-auto py-3 px-3 sm:px-6 lg:px-8">
                         <div className="flex items-center justify-between flex-wrap">
                             <div className="w-0 flex-1 flex items-center">
-            <span className="flex p-2 rounded-lg bg-indigo-800">
-              <SpeakerphoneIcon className="h-6 w-6 text-white" aria-hidden="true"/>
-            </span>
+                                <span className="flex p-2 rounded-lg bg-indigo-800">
+                                    <SpeakerphoneIcon
+                                        className="h-6 w-6 text-white"
+                                        aria-hidden="true"
+                                    />
+                                </span>
                                 <p className="ml-3 font-medium text-white truncate">
                                     {/*<span className="md:hidden">We announced a new product!</span>*/}
-                                    <span
-                                        className="inline">{announceWords}</span>
+                                    <span className="inline">
+                                        {state.message}
+                                    </span>
                                 </p>
                             </div>
                             {/*<div className="order-3 mt-2 flex-shrink-0 w-full sm:order-2 sm:mt-0 sm:w-auto">*/}
@@ -48,16 +58,18 @@ const BannerNews: React.FC<Props> = ({announceWords}) => {
                                     onClick={handleClose}
                                 >
                                     <span className="sr-only">Dismiss</span>
-                                    <XIcon className="h-6 w-6 text-white" aria-hidden="true"/>
+                                    <XIcon
+                                        className="h-6 w-6 text-white"
+                                        aria-hidden="true"
+                                    />
                                 </button>
                             </div>
                         </div>
                     </div>
                 </div>
-            }
+            )}
         </Fragment>
-
     )
 }
 
-export default BannerNews;
+export default BannerNews
