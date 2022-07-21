@@ -7,6 +7,7 @@ import LoginPage from './LoginPage'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../store'
 import NotFoundPage from './NotFoundPage'
+import ResetPage from './ResetPage'
 
 const AppRoute: FunctionComponent = () => {
     const token = useSelector((state: RootState) => state.account.token)
@@ -19,10 +20,11 @@ const AppRoute: FunctionComponent = () => {
                     {token && <Route path="cars" element={<CarsPage />} />}
                     <Route path="" element={<Navigate replace to="home" />} />
                     <Route path="/*" element={<NotFoundPage />} />
-                </Route>
-                <Route path="/account">
-                    <Route path="login" element={<LoginPage />} />
-                    <Route path="signup" element={<LoginPage />} />
+                    <Route path="/account">
+                        <Route path="login" element={<LoginPage />} />
+                        <Route path="signup" element={<LoginPage />} />
+                        <Route path="reset" element={<ResetPage />} />
+                    </Route>
                 </Route>
             </Routes>
         </BrowserRouter>

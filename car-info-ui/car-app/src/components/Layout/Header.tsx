@@ -3,14 +3,18 @@ import { NavLink } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../../store'
 import { AccountActions } from '../../store/account-slice'
+import { useFirebase } from '../../hooks/firebaseHook'
+import { Auth } from '@firebase/auth'
 
 export default () => {
     const token = useSelector((state: RootState) => state.account.token)
-    const dispatch: AppDispatch = useDispatch()
     const [isMenuOpen, setIsMenuOpen] = useState(false)
+    const auth = useFirebase()[1] as Auth
+    const dispatch: AppDispatch = useDispatch()
 
-    function logout() {
+    async function logout() {
         dispatch(AccountActions.removeToken())
+        await auth.signOut()
         console.log('logout now')
     }
 

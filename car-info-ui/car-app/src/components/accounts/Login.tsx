@@ -1,27 +1,17 @@
 import {
     createUserWithEmailAndPassword,
-    getAuth,
     sendEmailVerification,
     signInWithEmailAndPassword,
 } from 'firebase/auth'
 import { LockClosedIcon } from '@heroicons/react/solid'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import React, { useRef, useState } from 'react'
-import Environment from '../../env/Environment'
-import { initializeApp } from 'firebase/app'
 import { ClipLoader } from 'react-spinners'
 import { useDispatch } from 'react-redux'
 import { AccountActions } from '../../store/account-slice'
 import { AppDispatch } from '../../store'
-
-const firebaseConfig = {
-    apiKey: Environment.apiKey,
-    authDomain: Environment.authDomain,
-    projectId: Environment.projectId,
-    messagingSenderId: Environment.messagingSenderId,
-}
-
-const app = initializeApp(firebaseConfig)
+import { useFirebase } from '../../hooks/firebaseHook'
+import { Auth } from '@firebase/auth'
 
 export default function Login() {
     const location = useLocation()
@@ -32,6 +22,7 @@ export default function Login() {
     const dispatch: AppDispatch = useDispatch()
     const [message, setMessage] = useState<string>('')
     const [isLoading, setLoading] = useState(false)
+    const [app, auth] = useFirebase()
 
     async function handleSubmit(
         e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -55,9 +46,8 @@ export default function Login() {
     async function loginHandle(email: string, password: string) {
         try {
             setLoading(true)
-            const auth = getAuth(app)
             const userCredential = await signInWithEmailAndPassword(
-                auth,
+                auth as Auth,
                 email,
                 password
             )
@@ -80,9 +70,8 @@ export default function Login() {
     async function signupHandle(email: string, password: string) {
         try {
             setLoading(true)
-            const auth = getAuth(app)
             const userCredential = await createUserWithEmailAndPassword(
-                auth,
+                auth as Auth,
                 email,
                 password
             )
@@ -98,13 +87,17 @@ export default function Login() {
         }
     }
 
+    function resetPassword() {
+        navigate('/account/reset', { replace: true })
+    }
+
     return (
         <div className="h-[65vh] bg-gray-50">
             <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-md w-full space-y-8">
                     <div>
                         <h2 className="mt-6 text-center tracking-widest text-3xl font-extrabold text-gray-900">
-                            {isLogin ? '登入' : '註冊'}你的帳號
+                            {isLogin ? '登入' : '註冊'}您的帳號
                         </h2>
                         <p className="mt-2 text-center text-sm text-gray-600">
                             Or{'  '}
@@ -167,31 +160,32 @@ export default function Login() {
                             </div>
                         </div>
 
-                        {/*<div className="flex items-center justify-between">*/}
-                        {/*    <div className="flex items-center">*/}
-                        {/*        <input*/}
-                        {/*            id="remember-me"*/}
-                        {/*            name="remember-me"*/}
-                        {/*            type="checkbox"*/}
-                        {/*            className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"*/}
-                        {/*        />*/}
-                        {/*        <label*/}
-                        {/*            htmlFor="remember-me"*/}
-                        {/*            className="ml-2 block text-sm text-gray-900"*/}
-                        {/*        >*/}
-                        {/*            Remember me*/}
-                        {/*        </label>*/}
-                        {/*    </div>*/}
+                        <div className="flex items-center justify-end">
+                            {/*<div className="flex items-center">*/}
+                            {/*    <input*/}
+                            {/*        id="remember-me"*/}
+                            {/*        name="remember-me"*/}
+                            {/*        type="checkbox"*/}
+                            {/*        className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"*/}
+                            {/*    />*/}
+                            {/*    <label*/}
+                            {/*        htmlFor="remember-me"*/}
+                            {/*        className="ml-2 block text-sm text-gray-900"*/}
+                            {/*    >*/}
+                            {/*        Remember me*/}
+                            {/*    </label>*/}
+                            {/*</div>*/}
 
-                        {/*    <div className="text-sm">*/}
-                        {/*        <a*/}
-                        {/*            href="#"*/}
-                        {/*            className="font-medium text-indigo-600 hover:text-indigo-500"*/}
-                        {/*        >*/}
-                        {/*            Forgot your password?*/}
-                        {/*        </a>*/}
-                        {/*    </div>*/}
-                        {/*</div>*/}
+                            <div className="text-sm">
+                                <a
+                                    href="#"
+                                    className="font-medium text-indigo-600 hover:text-indigo-500"
+                                    onClick={resetPassword}
+                                >
+                                    忘記您的密碼?
+                                </a>
+                            </div>
+                        </div>
 
                         {message && (
                             <div className="flex items-center justify-center text-red-600">
