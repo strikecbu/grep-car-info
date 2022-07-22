@@ -52,9 +52,11 @@ public class ConnectGrepDataServiceShowShi2Impl implements ConnectGrepDataServic
                                             Elements aEle = element.select("a");
                                             String detailUrl = aEle.attr("href");
                                             String title = aEle.text();
-                                            String price = element.select("bdi")
+                                            String[] splitPrice = element.select("bdi")
                                                     .text()
-                                                    .split(" ")[1].replaceAll(",", "");
+                                                    .split(" ");
+                                            String originPrice = splitPrice.length == 2 ? splitPrice[1] : splitPrice[3];
+                                            String price = originPrice.replaceAll(",", "");
                                             String description = element.child(2)
                                                     .text();
                                             int year = Integer.parseInt(title.split(" ")[0].substring(0, 4));
