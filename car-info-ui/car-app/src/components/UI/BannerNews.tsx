@@ -4,7 +4,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { useAnnounce, State } from '../../hooks/announceHook'
 
 export type Props = {
-    announceWords: string
+    announceWords: string | undefined
 }
 
 const BannerNews: React.FC<Props> = ({ announceWords }) => {
@@ -16,7 +16,7 @@ const BannerNews: React.FC<Props> = ({ announceWords }) => {
     }
 
     useEffect(() => {
-        setMessage(announceWords)
+        if (announceWords) setMessage(announceWords)
     }, [])
 
     useEffect(() => {

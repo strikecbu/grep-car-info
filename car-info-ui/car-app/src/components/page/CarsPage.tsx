@@ -4,13 +4,12 @@ import PriceLine, { Price } from '../Shop/PriceLine'
 import { Car } from '../Shop/CarItem'
 import Environment from '../../env/Environment'
 import { Parallax, ParallaxLayer } from '@react-spring/parallax'
+import { animated, useSpring } from 'react-spring'
+import { useSelector } from 'react-redux'
 import { Footer } from '../UI/Footer'
-import BannerNews from '../UI/BannerNews'
 import Header from '../Layout/Header'
 import moon from '../../images/moon.webp'
 import land from '../../images/land.webp'
-import { useSelector } from 'react-redux'
-import { useSpring, animated } from 'react-spring'
 import { RootState } from '../../store'
 import { useAnnounce } from '../../hooks/announceHook'
 
@@ -104,9 +103,6 @@ const CarsPage: React.FC = () => {
                         factor={0.2}
                     >
                         {/*<ParallaxLayer offset={0} speed={1}>*/}
-                        <BannerNews
-                            announceWords={'Welcome to brand new website!'}
-                        />
                         <Header />
                         <div className="hidden md:flex justify-end mr-14 mt-14">
                             <div

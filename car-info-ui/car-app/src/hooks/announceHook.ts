@@ -5,7 +5,7 @@ export type State = {
 }
 
 let store: State = {
-    message: '',
+    message: 'Welcome to brand new website!',
 }
 let listeners: React.Dispatch<React.SetStateAction<State>>[] = []
 
