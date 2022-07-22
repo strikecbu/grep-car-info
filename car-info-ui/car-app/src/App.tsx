@@ -34,11 +34,12 @@ function App() {
     }, [auth, dispatch])
 
     useEffect(() => {
+        console.log('註冊SSE接收')
         const eventSource = new EventSource(Environment.announceNewsUrl)
         eventSource.onmessage = (message) => {
             setMessage(message.data)
         }
-    }, [setMessage])
+    }, [])
     return (
         <Fragment>
             <BannerNews announceWords={''} />
