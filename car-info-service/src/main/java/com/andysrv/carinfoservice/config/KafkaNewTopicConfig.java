@@ -10,10 +10,12 @@ import org.springframework.kafka.config.TopicBuilder;
 //@Profile("local")
 public class KafkaNewTopicConfig {
 
-    @Value("${carinfo.kafka.producer.topic}")
+    @Value("${carinfo.kafka.producer.scrapeCar.topic}")
     private String topic;
-    @Value("${carinfo.kafka.consumer.topic}")
-    private String scrapeTopic;
+    @Value("${carinfo.kafka.consumer.carInfo.topic}")
+    private String carInfoTopic;
+    @Value("${carinfo.kafka.consumer.jobDone.topic}")
+    private String jobDoneTopic;
 
     @Bean
     public NewTopic carInfoEvents() {
@@ -27,7 +29,16 @@ public class KafkaNewTopicConfig {
     @Bean
     public NewTopic scrapeEvents() {
         return TopicBuilder
-                .name(scrapeTopic)
+                .name(carInfoTopic)
+                .partitions(3)
+                .replicas(3)
+                .build();
+    }
+
+    @Bean
+    public NewTopic jobDoneEvents() {
+        return TopicBuilder
+                .name(jobDoneTopic)
                 .partitions(3)
                 .replicas(3)
                 .build();

@@ -22,10 +22,6 @@ public class KafkaConfig {
 
     @Value("${spring.kafka.producer.bootstrap-servers}")
     private String bootstrapServers;
-    @Value("${carinfo.kafka.consumer.topic}")
-    private String consumerTopic;
-    @Value("${spring.kafka.consumer.group-id}")
-    private String consumerGroupId;
 
     @Bean
     public KafkaSender<String, String> kafkaSender() {
@@ -42,15 +38,4 @@ public class KafkaConfig {
         return KafkaSender.create(senderOptions);
     }
 
-    @Bean
-    public ReceiverOptions<String, String> KafkaReceiver() {
-        Map<String, Object> consumerProps = new HashMap<>();
-        consumerProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-        consumerProps.put(ConsumerConfig.GROUP_ID_CONFIG, consumerGroupId);
-        consumerProps.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        consumerProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-
-        return ReceiverOptions.<String, String>create(consumerProps)
-                        .subscription(Collections.singleton(consumerTopic));
-    }
 }

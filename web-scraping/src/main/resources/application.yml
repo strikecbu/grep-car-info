@@ -4,9 +4,14 @@ scrap:
 carinfo:
   kafka:
     producer:
-      topic: car-info-events
+      carInfoEvent:
+        topic: car-info-events
+      scrapeDoneEvent:
+        topic: job-done-events
     consumer:
-      topic: scrape-events
+      scrapeCar:
+        topic: scrape-events
+
 
 spring:
   application:
@@ -22,7 +27,7 @@ spring:
       bootstrap-servers: localhost:29092,localhost:29093,localhost:29094
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      group-id: scrape-events-group1
+      group-id: scrape-service-group
     admin:
       properties:
         bootstrap.servers: localhost:29092,localhost:29093,localhost:29094
@@ -33,3 +38,5 @@ eureka:
   instance:
     prefer-ip-address: true
     instance-id: web-scraping-${spring.cloud.client.ip-address}:${server.port}
+server:
+  port: 8093

@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("local")
-@EmbeddedKafka(topics = {"${carinfo.kafka.producer.topic}"}, partitions = 3)
+@EmbeddedKafka(topics = {"${carinfo.kafka.producer.carInfoEvent.topic}"}, partitions = 3)
 @TestPropertySource(properties = {
         "spring.kafka.producer.bootstrap-servers=${spring.embedded.kafka.brokers}",
         "spring.kafka.admin.properties.bootstrap.servers=${spring.embedded.kafka.brokers}"
@@ -41,7 +41,7 @@ class CarInfoProducerTest {
     @Autowired
     private EmbeddedKafkaBroker broker;
 
-    @Value("${carinfo.kafka.producer.topic}")
+    @Value("${carinfo.kafka.producer.carInfoEvent.topic}")
     private String topic;
 
     @Autowired

@@ -16,7 +16,7 @@ public class CarInfoProducer {
 
     private final KafkaSender<String, String> sender;
     private final ObjectMapper objectMapper;
-    @Value("${carinfo.kafka.producer.topic}")
+    @Value("${carinfo.kafka.producer.carInfoEvent.topic}")
     private String topic;
 
     public CarInfoProducer(KafkaSender<String, String> sender, ObjectMapper objectMapper) {

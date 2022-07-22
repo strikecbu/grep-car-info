@@ -2,33 +2,35 @@ package com.andysrv.carinfoservice.consumer;
 
 import com.andysrv.carinfoservice.dto.CarEvent;
 import com.andysrv.carinfoservice.entity.CarInfo;
+import com.andysrv.carinfoservice.factory.KafkaReceiverFactory;
 import com.andysrv.carinfoservice.mapper.CarInfoMapper;
 import com.andysrv.carinfoservice.service.CarInfoService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
-import reactor.kafka.receiver.KafkaReceiver;
-import reactor.kafka.receiver.ReceiverOptions;
 import reactor.kafka.receiver.ReceiverRecord;
 
 @Component
 @Slf4j
 public class CarInfoConsumer implements CommandLineRunner {
 
-    private final ReceiverOptions<String, String> options;
-
+    private final KafkaReceiverFactory factory;
     private final CarInfoService carInfoService;
     private final ObjectMapper objectMapper;
     private final CarInfoMapper carInfoMapper;
 
-    public CarInfoConsumer(ReceiverOptions<String, String> options,
-                           CarInfoService carInfoService,
-                           ObjectMapper objectMapper, CarInfoMapper carInfoMapper) {
-        this.options = options;
+    @Value("${carinfo.kafka.consumer.carInfo.topic}")
+    private String consumeCarInfoTopic;
+
+    public CarInfoConsumer(
+            KafkaReceiverFactory factory, CarInfoService carInfoService,
+            ObjectMapper objectMapper, CarInfoMapper carInfoMapper) {
+        this.factory = factory;
         this.carInfoService = carInfoService;
         this.objectMapper = objectMapper;
 
@@ -37,17 +39,16 @@ public class CarInfoConsumer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        KafkaReceiver.create(options)
-                .receive()
+        factory.create(consumeCarInfoTopic)
                 .flatMap(this::handleMessage)
                 .onErrorContinue((throwable, o) -> {
-                    log.warn("Saving carInfo fail: {}", throwable.getMessage());
+                    log.warn("Consume {} fail: {}", consumeCarInfoTopic, throwable.getMessage());
                 })
                 .log()
                 .subscribe();
     }
 
-    public Publisher<? extends CarInfo> handleMessage(ReceiverRecord<String, String> receiverRecord) {
+    private Publisher<? extends CarInfo> handleMessage(ReceiverRecord<String, String> receiverRecord) {
         return Mono.just(receiverRecord)
                 .map(record -> {
                     String json = record.value();
@@ -59,9 +60,11 @@ public class CarInfoConsumer implements CommandLineRunner {
                 })
                 .map(carInfoMapper::dtoToEntity)
                 .flatMap(carInfoService::saveOrUpdate)
-                .doOnNext(noop -> receiverRecord.receiverOffset().acknowledge())
+                .doOnNext(noop -> receiverRecord.receiverOffset()
+                        .acknowledge())
                 .doOnError(throwable -> {
                     String s = "";
                 });
     }
+
 }

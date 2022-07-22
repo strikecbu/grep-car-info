@@ -9,12 +9,14 @@ import reactor.core.publisher.Mono;
 import reactor.kafka.sender.KafkaSender;
 import reactor.kafka.sender.SenderRecord;
 
+import java.util.UUID;
+
 @Component
 @Slf4j
 public class CarInfoScrapeProducer {
 
     private final KafkaSender<String, String> sender;
-    @Value("${carinfo.kafka.producer.topic}")
+    @Value("${carinfo.kafka.producer.scrapeCar.topic}")
     private String topic;
 
     public CarInfoScrapeProducer(KafkaSender<String, String> sender) {
@@ -22,7 +24,9 @@ public class CarInfoScrapeProducer {
     }
 
     public void sendScrapeEvent(VendorType vendor) {
-        ProducerRecord<String, String> record = new ProducerRecord<>(topic, "CAR", vendor.toString());
+        String jobId = UUID.randomUUID().toString().replaceAll("-", "");
+        String eventValue = vendor.toString() + "-" + jobId;
+        ProducerRecord<String, String> record = new ProducerRecord<>(topic, "CAR", eventValue);
         SenderRecord<String, String, String> senderRecord = SenderRecord.create(record, "SHOU_SHI");
         sender.send(Mono.just(senderRecord))
                 .single()

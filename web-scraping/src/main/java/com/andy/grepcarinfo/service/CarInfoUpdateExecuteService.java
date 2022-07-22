@@ -4,6 +4,6 @@ import com.andy.grepcarinfo.model.VendorType;
 
 public interface CarInfoUpdateExecuteService {
 
-    void execute(VendorType vendor);
+    void execute(VendorType vendor, String jobId);
 
 }

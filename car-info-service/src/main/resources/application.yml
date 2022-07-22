@@ -5,13 +5,16 @@ carinfo:
       fixedDelay: 300000
   kafka:
     producer:
-      topic: scrape-events
+      scrapeCar:
+        topic: scrape-events
     consumer:
-      topic: car-info-events
+      carInfo:
+        topic: car-info-events
+      jobDone:
+        topic: job-done-events
 
 server:
   port: 8092
-
 
 spring:
   application:
@@ -27,7 +30,7 @@ spring:
       bootstrap-servers: localhost:29092,localhost:29093,localhost:29094
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      group-id: car-info-events-group1
+      group-id: car-info-service-group
     admin:
       properties:
         bootstrap.servers: localhost:29092,localhost:29093,localhost:29094
