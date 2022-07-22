@@ -42,7 +42,7 @@ const Cars: React.FC<Props> = ({ cars, openPriceLine }) => {
                                     title={items.title}
                                     description={items.description}
                                     brand={items.brand}
-                                    updateTime={items.updateTime}
+                                    updateTime={items.latestPrice.createTime}
                                     price={items.latestPrice.price.toString()}
                                     openPriceLine={openPriceLine}
                                 />

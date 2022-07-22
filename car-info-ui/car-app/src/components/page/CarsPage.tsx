@@ -20,8 +20,12 @@ const CarsPage: React.FC = () => {
     const [showPrice, setShowPrice] = useState(false)
     const [detailUrl, setDetailUrl] = useState('')
     const [prices, setPrices] = useState<Price[]>([])
+    const [state, setMessage] = useAnnounce()
+    const [scraping, setScrapeStat] = useState(false)
     const token = useSelector((state: RootState) => state.account.token)
-    const setMessage = useAnnounce()[1]
+    const btnStyle = scraping
+        ? 'flex justify-center items-center w-16 h-16 bg-gray-400 rounded-lg opacity-70 cursor-not-allowed'
+        : 'flex justify-center items-center w-16 h-16 bg-gray-400 rounded-lg opacity-70 hover:scale-110 duration-300 cursor-pointer'
 
     const [styles, api] = useSpring(() => ({
         loop: true,
@@ -35,6 +39,16 @@ const CarsPage: React.FC = () => {
         api.pause()
     }, [])
 
+    useEffect(() => {
+        if (state.message === '拉取新資料中，請等候通知...') {
+            setScrapeStat(true)
+        } else {
+            api.pause()
+            setScrapeStat(false)
+            fetchData()
+        }
+    }, [state])
+
     const fetchData = async () => {
         const response: Response = await fetch(Environment.fetchCarUrl, {
             headers: new Headers({
@@ -43,7 +57,13 @@ const CarsPage: React.FC = () => {
             method: 'GET',
         })
         const cars: Car[] = (await response.json()) as Car[]
-        setCars(cars)
+        const sortCars = cars.sort((a: Car, b: Car) => {
+            if (a.brand === b.brand) {
+                return 0
+            }
+            return a.brand > b.brand ? 1 : -1
+        })
+        setCars(sortCars)
     }
 
     const closePriceLine = () => {
@@ -67,7 +87,10 @@ const CarsPage: React.FC = () => {
         }
     }
 
-    async function refreshList() {
+    async function refreshListHandler() {
+        if (scraping) {
+            return
+        }
         try {
             const data = {
                 vendor: 'SHOU_SHI',
@@ -86,7 +109,6 @@ const CarsPage: React.FC = () => {
             } else {
                 setMessage('拉取新資料中，請等候通知...')
             }
-            api.pause()
         } catch (e: any) {
             setMessage('呼叫錯誤，請稍後再試')
             api.pause()
@@ -106,8 +128,8 @@ const CarsPage: React.FC = () => {
                         <Header />
                         <div className="hidden md:flex justify-end mr-14 mt-14">
                             <div
-                                className="flex justify-center items-center w-16 h-16 cursor-pointer bg-gray-400 rounded-lg opacity-70"
-                                onClick={refreshList}
+                                className={btnStyle}
+                                onClick={refreshListHandler}
                             >
                                 <animated.div style={styles}>
                                     <img

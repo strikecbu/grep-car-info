@@ -46,6 +46,11 @@ const CarItem: React.FC<Props> = ({
         openPriceLine(keyId)
     }
 
+    const priceFormat = (price: string): string => {
+        const number = Number(price)
+        return new Intl.NumberFormat().format(number)
+    }
+
     return (
         <article
             className="max-w-md lg:w-[28rem] mx-auto mt-4 shadow-lg border rounded-md duration-300 hover:shadow-sm bg-white"
@@ -89,7 +94,7 @@ const CarItem: React.FC<Props> = ({
                         className={classes.price + ' cursor-pointer'}
                         onClick={openPriceHandle}
                     >
-                        ${price}
+                        ${priceFormat(price)}
                     </div>
                 </div>
                 <div className="pt-3 ml-4 mr-2 mb-3">
