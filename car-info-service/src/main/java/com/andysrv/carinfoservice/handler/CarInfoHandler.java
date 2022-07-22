@@ -14,10 +14,13 @@ public class CarInfoHandler {
 
     private final CarInfoService carInfoService;
     private final CarInfoScrapeProducer scrapeProducer;
+    private final AnnounceNewsStream announceNewsStream;
 
-    public CarInfoHandler(CarInfoService carInfoService, CarInfoScrapeProducer scrapeProducer) {
+    public CarInfoHandler(CarInfoService carInfoService, CarInfoScrapeProducer scrapeProducer,
+                          AnnounceNewsStream announceNewsStream) {
         this.carInfoService = carInfoService;
         this.scrapeProducer = scrapeProducer;
+        this.announceNewsStream = announceNewsStream;
     }
 
     public Mono<ServerResponse> getAllCars(ServerRequest request) {
@@ -41,5 +44,21 @@ public class CarInfoHandler {
                 })
                 .onErrorResume(throwable -> ServerResponse.badRequest()
                         .bodyValue(throwable.getMessage()));
+    }
+
+    public Mono<ServerResponse> announceNewsStream(ServerRequest request) {
+        return ServerResponse.ok()
+                .contentType(MediaType.TEXT_EVENT_STREAM)
+                .body(announceNewsStream.getNewsFlux(), String.class);
+    }
+
+
+    public Mono<ServerResponse> testStream(ServerRequest request) {
+        return request.bodyToMono(ReScrapeRequest.class)
+                .doOnNext(reScrapeRequest -> {
+                    String value = reScrapeRequest.getVendor();
+                    announceNewsStream.next(value);
+                })
+                .flatMap(req -> ServerResponse.ok().build());
     }
 }

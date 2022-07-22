@@ -18,6 +18,10 @@ public class RouterConfig {
                     builder.GET("cars", handler::getAllCars)
                             .POST("reScrape", handler::sendScrapeEvent);
                 })
+                .nest(path("/public"), b -> {
+                    b.GET("announceNews", handler::announceNewsStream);
+                    b.POST("testStream", handler::testStream);
+                })
                 .build();
     }
 }

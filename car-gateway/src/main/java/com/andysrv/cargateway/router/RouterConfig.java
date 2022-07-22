@@ -29,11 +29,19 @@ public class RouterConfig {
                         .uri("lb://WEB-SCRAPING")
                 )
                 .route(spec -> spec
-                        .path("/car-info-service/**")
+                        .path("/car-info-service/cloudcar/**")
                         .filters(filterSpec -> filterSpec
                                 .rewritePath("/car-info-service/(?<path>.*)", "/${path}")
                                 .addResponseHeader("X-Response-Timestamp", new Date().toString())
                                 .filter(verifyFirebaseTokenFilter)
+                        )
+                        .uri("lb://CAR-INFO-SERVICE")
+                )
+                .route(spec -> spec
+                        .path("/car-info-service/public/**")
+                        .filters(filterSpec -> filterSpec
+                                .rewritePath("/car-info-service/(?<path>.*)", "/${path}")
+                                .addResponseHeader("X-Response-Timestamp", new Date().toString())
                         )
                         .uri("lb://CAR-INFO-SERVICE")
                 )
