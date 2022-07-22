@@ -1,11 +1,11 @@
 const Environment = {
-    fetchCarUrl: 'http://localhost:8087/car-info-service/cloudcar/cars',
-    reScrapeUrl: 'http://localhost:8087/car-info-service/cloudcar/reScrape',
+    fetchCarUrl: 'http://192.168.0.105:8087/car-info-service/cloudcar/cars',
+    reScrapeUrl: 'http://192.168.0.105:8087/car-info-service/cloudcar/reScrape',
     announceNewsUrl:
-        'http://localhost:8087/car-info-service/public/announceNews',
+        'http://192.168.0.105:8087/car-info-service/public/announceNews',
     showCarPic: false,
     apiKey: 'AIzaSyB73OtOWqZ4ztcrjO3JssF_2pazJTf0__s',
-    authDomain: 'localhost',
+    authDomain: '192.168.0.105',
     projectId: 'microservices-ui',
     messagingSenderId: '263349977071',
 }

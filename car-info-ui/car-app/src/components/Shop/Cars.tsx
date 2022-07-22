@@ -1,7 +1,9 @@
 import CarItem, { Car } from './CarItem'
-import React, { Fragment, useRef } from 'react'
+import React, { Fragment, useRef, useState } from 'react'
 import { Parallax, ParallaxLayer } from '@react-spring/parallax'
+import { isMobile } from 'react-device-detect'
 import Environment from '../../env/Environment'
+import { useSpring, animated } from 'react-spring'
 
 export type Props = {
     cars: Car[]
@@ -9,8 +11,49 @@ export type Props = {
 }
 
 const Cars: React.FC<Props> = ({ cars, openPriceLine }) => {
-    const ref = useRef<any>()
+    const props = useSpring({
+        to: { opacity: 1 },
+        from: { opacity: 0 },
+        delay: 200,
+    })
 
+    if (isMobile) {
+        return (
+            <Fragment>
+                <div className="text-center my-10">
+                    <animated.h1
+                        style={props}
+                        className="text-3xl text-gray-300 font-semibold"
+                    >
+                        小施汽車
+                    </animated.h1>
+                    <p className="mt-3 text-gray-500">
+                        All data comes from sscar website and all rights
+                        belongs.
+                    </p>
+                </div>
+                <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3 container mx-auto mb-10">
+                    {cars.map((items, key) => {
+                        if (key < 30 || !Environment.showCarPic) {
+                            return (
+                                <CarItem
+                                    key={items.id}
+                                    keyId={items.id}
+                                    img={items.imageUrl}
+                                    title={items.title}
+                                    description={items.description}
+                                    brand={items.brand}
+                                    updateTime={items.latestPrice.createTime}
+                                    price={items.latestPrice.price.toString()}
+                                    openPriceLine={openPriceLine}
+                                />
+                            )
+                        }
+                    })}
+                </div>
+            </Fragment>
+        )
+    }
     return (
         <Fragment>
             <ParallaxLayer offset={0.2} speed={1}>

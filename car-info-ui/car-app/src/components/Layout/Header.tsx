@@ -123,11 +123,9 @@ export default () => {
                                 <div className="p-5 bg-white border rounded shadow-sm ">
                                     <div className="flex items-center justify-between mb-4">
                                         <div>
-                                            <a
-                                                href="/"
-                                                aria-label="AndySrv"
-                                                title="AndySrv"
+                                            <NavLink
                                                 className="inline-flex items-center"
+                                                to="/home"
                                             >
                                                 <img
                                                     className="w-7"
@@ -137,7 +135,7 @@ export default () => {
                                                 <span className="ml-2 text-xl font-bold tracking-wide text-gray-800 uppercase">
                                                     ANDYSRV
                                                 </span>
-                                            </a>
+                                            </NavLink>
                                         </div>
                                         <div>
                                             <button

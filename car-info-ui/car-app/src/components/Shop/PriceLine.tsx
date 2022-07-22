@@ -26,7 +26,7 @@ const PriceLine: React.FC<Props> = ({ prices, detailUrl, closeFn }) => {
                         className="absolute w-full h-full bg-gray-500 opacity-90 z-20"
                         onClick={closeWindow}
                     ></div>
-                    <div className="bg-white shadow overflow-hidden sm:rounded-lg container relative z-50">
+                    <div className="bg-white shadow overflow-x-auto sm:rounded-lg container relative z-50">
                         <div
                             className="absolute top-3.5 right-5 cursor-pointer"
                             onClick={closeWindow}

@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import classes from './CarItem.module.css'
 import Environment from '../../env/Environment'
+import { AniNumber } from '../UI/AniNumber'
 
 export type Props = {
     keyId: string
@@ -42,6 +43,8 @@ const CarItem: React.FC<Props> = ({
     price,
     openPriceLine,
 }) => {
+    const [isStatic, setStatic] = useState(false)
+
     function openPriceHandle() {
         openPriceLine(keyId)
     }
@@ -49,6 +52,10 @@ const CarItem: React.FC<Props> = ({
     const priceFormat = (price: string): string => {
         const number = Number(price)
         return new Intl.NumberFormat().format(number)
+    }
+
+    function makeStatic() {
+        setStatic(true)
     }
 
     return (
@@ -94,7 +101,13 @@ const CarItem: React.FC<Props> = ({
                         className={classes.price + ' cursor-pointer'}
                         onClick={openPriceHandle}
                     >
-                        ${priceFormat(price)}
+                        ${isStatic && priceFormat(price)}
+                        {!isStatic && (
+                            <AniNumber
+                                value={Number(price)}
+                                handle={makeStatic}
+                            />
+                        )}
                     </div>
                 </div>
                 <div className="pt-3 ml-4 mr-2 mb-3">
