@@ -12,10 +12,10 @@ spring:
           '[/**]':
             allowedOrigins: "*"
             allowedHeaders: "*"
-      #            allowedMethods:
-      #              - GET
-      #              - POST
-      #              - OPTIONS
+            allowedMethods:
+              - GET
+              - POST
+              - OPTIONS
       #        add-to-simple-url-handler-mapping: true
       #      default-filters:
       #        - DedupeResponseHeader=Vary Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_FIRST
