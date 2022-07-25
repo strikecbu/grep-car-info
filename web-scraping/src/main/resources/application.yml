@@ -22,15 +22,15 @@ spring:
     active: dev
   kafka:
     producer:
-      bootstrap-servers: localhost:29092,localhost:29093,localhost:29094
+      bootstrap-servers: 192.168.0.110:32595,192.168.0.110:32027,192.168.0.110:32448
     consumer:
-      bootstrap-servers: localhost:29092,localhost:29093,localhost:29094
+      bootstrap-servers: 192.168.0.110:32595,192.168.0.110:32027,192.168.0.110:32448
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       group-id: scrape-service-group
     admin:
       properties:
-        bootstrap.servers: localhost:29092,localhost:29093,localhost:29094
+        bootstrap.servers: 192.168.0.110:32595,192.168.0.110:32027,192.168.0.110:32448
 eureka:
   client:
     service-url:
