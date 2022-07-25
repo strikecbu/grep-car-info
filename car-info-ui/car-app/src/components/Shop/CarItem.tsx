@@ -98,7 +98,10 @@ const CarItem: React.FC<Props> = ({
                         </div>
                     </div>
                     <div
-                        className={classes.price + ' cursor-pointer'}
+                        className={
+                            classes.price +
+                            ' cursor-pointer duration-200 hover:ring-4'
+                        }
                         onClick={openPriceHandle}
                     >
                         ${isStatic && priceFormat(price)}

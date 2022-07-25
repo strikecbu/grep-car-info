@@ -10,7 +10,10 @@ export const AniNumber: React.FC<Props> = ({ value, handle }) => {
     const { number } = useSpring({
         from: { number: 0 },
         number: value,
-        delay: 100,
+        delay: 300,
+        config: {
+            duration: 1000,
+        },
         onRest: handle,
     })
 
