@@ -1,0 +1,32 @@
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: data-theta-kafka-2-pv
+spec:
+  storageClassName: nfs-client
+  capacity:
+    storage: 900Mi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  nfs:
+    server: 192.168.0.150
+    path: "/volume1/K8S/kafka2"
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: data-theta-kafka-2
+spec:
+  volumeName: data-theta-kafka-2-pv
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: nfs-client
+  resources:
+    requests:
+      storage: 200Mi
+
