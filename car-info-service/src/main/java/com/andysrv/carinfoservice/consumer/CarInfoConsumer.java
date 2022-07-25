@@ -7,6 +7,7 @@ import com.andysrv.carinfoservice.mapper.CarInfoMapper;
 import com.andysrv.carinfoservice.service.CarInfoService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.micrometer.core.annotation.Timed;
 import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,6 +49,7 @@ public class CarInfoConsumer implements CommandLineRunner {
                 .subscribe();
     }
 
+    @Timed(value = "CarInfoConsumer.handleMessage.time", description = "Time taken to consume carInfo then save")
     private Publisher<? extends CarInfo> handleMessage(ReceiverRecord<String, String> receiverRecord) {
         return Mono.just(receiverRecord)
                 .map(record -> {

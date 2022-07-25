@@ -3,6 +3,7 @@ package com.andy.grepcarinfo.service;
 import com.andy.grepcarinfo.exception.FetchDataException;
 import com.andy.grepcarinfo.model.CarView;
 import com.andy.grepcarinfo.model.VendorType;
+import io.micrometer.core.annotation.Timed;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -23,6 +24,7 @@ import java.util.stream.Stream;
 public class ConnectGrepDataServiceShowShi2Impl implements ConnectGrepDataService {
 
     @Override
+    @Timed(value = "scrapWebData.time", description = "Time taken to scraping shou shi web")
     public Flux<CarView> scrapWebData(String url) throws IOException {
 
         return getAllQueryUrl(url)

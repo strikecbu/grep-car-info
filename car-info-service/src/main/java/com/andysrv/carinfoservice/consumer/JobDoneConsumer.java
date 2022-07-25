@@ -49,6 +49,8 @@ public class JobDoneConsumer implements CommandLineRunner {
                     String timeStr = LocalDateTime.now()
                             .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
                     announceNewsStream.next(String.format("資料最後更新時間: %s", timeStr));
+                    log.info("資料最後更新時間: {}", timeStr);
+
                 })
                 .doOnNext(noop -> receiverRecord.receiverOffset()
                         .acknowledge())

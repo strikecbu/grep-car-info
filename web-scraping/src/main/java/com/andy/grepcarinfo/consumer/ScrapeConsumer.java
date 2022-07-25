@@ -3,6 +3,7 @@ package com.andy.grepcarinfo.consumer;
 import com.andy.grepcarinfo.exception.WrongScrapeCommandException;
 import com.andy.grepcarinfo.model.VendorType;
 import com.andy.grepcarinfo.service.CarInfoUpdateExecuteService;
+ import io.micrometer.core.annotation.Timed;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -20,6 +21,7 @@ public class ScrapeConsumer {
 
 
     @KafkaListener(topics = "scrape-events")
+    @Timed(value = "ScrapeConsumer.consumer.time", description = "Time taken to receive command event")
     public void consumer(ConsumerRecord<String, String> record) {
         log.info("consumer record: {}", record);
         ScrapeType scrapeType = ScrapeType.values(record.key())

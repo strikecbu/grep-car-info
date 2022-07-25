@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3.10-management
+    mem_limit: 350m
+    expose:
+      - "5672"
+      - "15672"
+    ports:
+      - 5672:5672
+      - 15672:15672
+    networks:
+      - car-net
+    healthcheck:
+      test: [ "CMD", "rabbitmqctl", "status" ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+    # https://hub.docker.com/r/openzipkin/zipkin
+  zipkin:
+    image: openzipkin/zipkin:2.23
+    mem_limit: 512m
+    expose:
+      - "9411"
+    ports:
+      - "9411:9411"
+    networks:
+      - car-net
+    environment:
+      - RABBIT_ADDRESSES=rabbitmq
+      - RABBIT_USER=guest
+      - RABBIT_PASSWORD=guest
+      - STORAGE_TYPE=mem
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+  prometheus:
+    image: prom/prometheus:v2.36.2
+    ports:
+      - '9090:9090'
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    networks:
+      - car-net
+
+  grafana:
+    image: grafana/grafana:8.5.5
+    ports:
+      - '3000:3000'
+    environment:
+#      - GF_INSTALL_PLUGINS=http://plugin-domain.com/my-custom-plugin.zip;custom-plugin,grafana-clock-panel
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=password
+    depends_on:
+      - prometheus
+    networks:
+      - car-net
+
+
+
+networks:
+  car-net:

@@ -5,6 +5,7 @@ import com.andysrv.carinfoservice.dto.VendorType;
 import com.andysrv.carinfoservice.producer.CarInfoScrapeProducer;
 import com.andysrv.carinfoservice.service.CarInfoService;
 import com.andysrv.carinfoservice.stream.AnnounceNewsStream;
+import io.micrometer.core.annotation.Timed;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
@@ -25,6 +26,7 @@ public class CarInfoHandler {
         this.announceNewsStream = announceNewsStream;
     }
 
+    @Timed(value = "getAllCars.time", description = "Time taken to return all cars")
     public Mono<ServerResponse> getAllCars(ServerRequest request) {
         return carInfoService.getAllCarInfo()
                 .collectList()

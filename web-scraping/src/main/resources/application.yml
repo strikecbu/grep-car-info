@@ -31,6 +31,11 @@ spring:
     admin:
       properties:
         bootstrap.servers: 192.168.0.110:32595,192.168.0.110:32027,192.168.0.110:32448
+  zipkin:
+    base-url: http://localhost:9411
+  sleuth:
+    sampler:
+      probability: 1
 eureka:
   client:
     service-url:
@@ -40,3 +45,9 @@ eureka:
     instance-id: web-scraping-${spring.cloud.client.ip-address}:${server.port}
 server:
   port: 8093
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus
