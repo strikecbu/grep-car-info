@@ -2,11 +2,20 @@ dependencies:
 - name: common
   repository: file://../../common
   version: 0.1.0
-- name: kafka
-  repository: file://../../services/kafka
+- name: car-config
+  repository: file://../../services/car-config
   version: 0.1.0
-- name: zookeeper
-  repository: file://../../services/zookeeper
+- name: car-eureka
+  repository: file://../../services/car-eureka
   version: 0.1.0
-digest: sha256:81b26c35a1b1ae1e175daef85eafebe60dfcc6b1daf0111854a05579361b2435
-generated: "2022-07-18T01:16:50.709068+08:00"
+- name: car-gateway
+  repository: file://../../services/car-gateway
+  version: 0.1.0
+- name: car-info-service
+  repository: file://../../services/car-info-service
+  version: 0.1.0
+- name: web-scraping
+  repository: file://../../services/web-scraping
+  version: 0.1.0
+digest: sha256:bcb2cfa8c358b28dfb69629e86dcc851beef6b25be2409ba562467802bcf0731
+generated: "2022-07-27T17:23:53.081901+08:00"

@@ -1,0 +1,16 @@
+applicationName: web-scraping
+replicaCount: 1
+image: andychentw/web-scraping:latest
+
+rcpu: 2
+lcpu: 5
+
+service:
+  internalPort: 8093
+  externalPort: 8093
+  type: ClusterIP
+
+  
+profile_enabled: true  
+configImport_enabled: true
+zipkin_baseurl_enabled: true

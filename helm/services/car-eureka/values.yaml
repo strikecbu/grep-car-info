@@ -1,0 +1,15 @@
+applicationName: car-eureka
+replicaCount: 1
+image: andychentw/car-eureka:latest
+
+rcpu: 0.25
+lcpu: 0.25
+
+service:
+  internalPort: 8011
+  externalPort: 8011
+  type: NodePort
+  
+profile_enabled: true  
+configImport_enabled: true
+zipkin_baseurl_enabled: true

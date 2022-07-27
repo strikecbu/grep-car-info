@@ -1,0 +1,13 @@
+applicationName: car-info-service
+replicaCount: 1
+image: andychentw/car-info-service:latest
+  
+service:
+  internalPort: 8092
+  externalPort: 8092
+  type: ClusterIP
+  
+profile_enabled: true  
+configImport_enabled: true
+zipkin_baseurl_enabled: true
+mongodb_url_enabled: true

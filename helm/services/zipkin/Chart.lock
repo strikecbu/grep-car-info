@@ -1,0 +1,6 @@
+dependencies:
+- name: cloudbank-common
+  repository: file://../../cloudbank-common
+  version: 0.1.0
+digest: sha256:57221a6f6500c1a99b4026ebb00e06fefcdb686e7cf99ac28807f3693b718b33
+generated: "2022-07-14T18:11:29.252007+08:00"

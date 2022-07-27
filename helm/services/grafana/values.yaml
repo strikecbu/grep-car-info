@@ -1,0 +1,9 @@
+applicationName: grafana
+replicaCount: 1
+image: grafana/grafana:8.5.5
+
+service:
+  internalPort: 3000
+  externalPort: 3000
+  type: NodePort
+

@@ -1,0 +1,13 @@
+target:
+  eurekaHost: car-eureka-service:8011
+  configServerHost: car-config-service:8010
+
+applicationName: prometheus
+replicaCount: 1
+image: prom/prometheus:v2.36.2
+
+service:
+  internalPort: 9090
+  externalPort: 9090
+  type: NodePort
+

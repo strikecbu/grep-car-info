@@ -1,7 +1,7 @@
 kafka:
   replicaCount: 3
   externalAccess:
-    enabled: true
+    enabled: false
     service:
       type: NodePort
     autoDiscovery:
@@ -10,4 +10,8 @@ kafka:
     create: true
   rbac:
     create: true
-
+  persistence:
+    enabled: false
+  zookeeper:
+    persistence:
+      enabled: false

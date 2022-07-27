@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.applicationName }}-deploy
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.applicationName }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.applicationName }}
+    spec:
+      containers:
+        - name: {{ .Values.applicationName }}
+          image: "{{ .Values.image }}"
+          imagePullPolicy: Always
+          ports:
+            - containerPort: {{ .Values.service.internalPort }}
+          volumeMounts:
+            - mountPath: /etc/prometheus/
+              name: config-voluem
+      volumes:
+        - name: config-voluem
+          configMap:
+            name: prometheus-config

@@ -1,0 +1,12 @@
+dependencies:
+- name: zipkin
+  repository: file://../../services/zipkin
+  version: 0.1.0
+- name: prometheus
+  repository: file://../../services/prometheus
+  version: 0.1.0
+- name: grafana
+  repository: file://../../services/grafana
+  version: 0.1.0
+digest: sha256:33209637651c46c356d072bf9fa11010b46f6d0193c42ba9fa7208620bb60b53
+generated: "2022-07-27T21:24:37.895191+08:00"

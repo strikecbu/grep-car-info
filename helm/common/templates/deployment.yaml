@@ -19,12 +19,40 @@ spec:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.image }}"
         imagePullPolicy: IfNotPresent
-        {{- if .Values.kafka1Env_enabled }}
-        {{- include "deploy.env.kafka1" . | default "" | indent 8 }}
-        {{- end }}
-        {{- if .Values.zookeeperEnv_enabled }}
-        {{- include "deploy.env.zookeeper" . | default "" | indent 8 }}
-        {{- end }}
         ports:
-        - containerPort: {{ .Values.service.internalPort }}
+          - containerPort: {{ .Values.service.internalPort }}
+        resources:
+          requests:
+            cpu: {{ .Values.rcpu | default "0.5" | quote }}
+          limits:
+            cpu: {{ .Values.lcpu | default "0.5" | quote }}
+        env:
+        {{- if .Values.profile_enabled }}
+          - name: SPRING_PROFILES_ACTIVE
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.global.configMapName }}
+                key: SPRING_PROFILES_ACTIVE
+        {{- end }}
+        {{- if .Values.configImport_enabled }}
+          - name: SPRING_CONFIG_IMPORT
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.global.configMapName }}
+                key: SPRING_CONFIG_IMPORT
+        {{- end }}
+        {{- if .Values.zipkin_baseurl_enabled }}
+          - name: SPRING_ZIPKIN_BASE-URL
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.global.configMapName }}
+                key: SPRING_ZIPKIN_BASE-URL
+        {{- end }}
+        {{- if .Values.mongodb_url_enabled }}
+          - name: SPRING_DATA_MONGODB_URI
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.global.secretName }}
+                key: SPRING_DATA_MONGODB_URI
+        {{- end }}
 {{- end }}

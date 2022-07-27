@@ -1,4 +1,3 @@
-{{- define "common.service" }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -10,8 +9,7 @@ spec:
   selector:
     app: {{ .Values.applicationName }}
   ports:
-  - port: {{ .Values.service.externalPort }}
-    targetPort: {{ .Values.service.internalPort }}
-    protocol: TCP
-    name: {{ .Values.service.name | default "web" | quote }}
- {{- end }}
+    - port: {{ .Values.service.externalPort }}
+      targetPort: {{ .Values.service.internalPort }}
+      protocol: TCP
+      name: {{ .Values.service.name | default "web" | quote }}

@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.applicationName }}-deploy
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.applicationName }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.applicationName }}
+    spec:
+      containers:
+        - name: {{ .Values.applicationName }}
+          image: "{{ .Values.image }}"
+          imagePullPolicy: Always
+          env:
+{{/*            - name: RABBIT_ADDRESSES*/}}
+{{/*              valueFrom:*/}}
+{{/*                configMapKeyRef:*/}}
+{{/*                  name: {{ .Values.global.configMapName }}*/}}
+{{/*                  key: RABBIT_ADDRESSES*/}}
+{{/*            - name: RABBIT_USER*/}}
+{{/*              value: guest*/}}
+{{/*            - name: RABBIT_PASSWORD*/}}
+{{/*              value: guest*/}}
+            - name: STORAGE_TYPE
+              value: mem
+          ports:
+            - containerPort: {{ .Values.service.internalPort }}

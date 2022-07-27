@@ -4,5 +4,7 @@ kind: ConfigMap
 metadata:
   name: {{ .Values.global.configMapName }}
 data:
-  
+  SPRING_PROFILES_ACTIVE: {{ .Values.global.activeProfile }}
+  SPRING_CONFIG_IMPORT: {{ .Values.global.configServerImport }}
+  SPRING_ZIPKIN_BASE-URL: {{ .Values.global.springZipkinBaseurl }}
 {{- end }}

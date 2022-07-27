@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.applicationName }}-deploy
+  labels:
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.applicationName }}
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.applicationName }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image }}"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: {{ .Values.service.internalPort }}
+          env:
+
+            - name: SPRING_PROFILES_ACTIVE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.global.configMapName }}
+                  key: SPRING_PROFILES_ACTIVE
+            - name: SPRING_CONFIG_IMPORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.global.configMapName }}
+                  key: SPRING_CONFIG_IMPORT
+            - name: SPRING_ZIPKIN_BASE-URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.global.configMapName }}
+                  key: SPRING_ZIPKIN_BASE-URL
+            - name: FIREBASE_CONFIG_PRIVATEKEYID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.global.secretName }}
+                  key: FIREBASE_CONFIG_PRIVATEKEYID
+            - name: FIREBASE_CONFIG_PRIVATEKEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.global.secretName }}
+                  key: FIREBASE_CONFIG_PRIVATEKEY
+            - name: FIREBASE_CONFIG_CLIENTID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.global.secretName }}
+                  key: FIREBASE_CONFIG_CLIENTID

@@ -1,0 +1,17 @@
+applicationName: car-config
+replicaCount: 1
+image: andychentw/car-config:latest
+
+
+rcpu: 0.15
+lcpu: 0.25
+
+service:
+  internalPort: 8010
+  externalPort: 8010
+  type: ClusterIP
+  
+profile_enabled: true  
+configImport_enabled: false
+zipkin_baseurl_enabled: true
+

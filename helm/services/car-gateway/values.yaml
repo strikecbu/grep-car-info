@@ -1,0 +1,12 @@
+applicationName: car-gateway
+replicaCount: 1
+image: andychentw/car-gateway:latest
+  
+service:
+  internalPort: 8087
+  externalPort: 8087
+  type: NodePort
+  
+profile_enabled: true  
+configImport_enabled: true
+zipkin_baseurl_enabled: true
