@@ -1,6 +1,5 @@
 package com.andy.grepcarinfo.service;
 
-import com.andy.grepcarinfo.model.Car;
 import com.andy.grepcarinfo.model.CarView;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -10,7 +9,6 @@ import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
 
 import java.io.IOException;
-import java.util.List;
 
 import static org.mockito.ArgumentMatchers.anyString;
 
