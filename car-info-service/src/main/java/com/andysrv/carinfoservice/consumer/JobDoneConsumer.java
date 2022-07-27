@@ -6,17 +6,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.CommandLineRunner;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import reactor.kafka.receiver.ReceiverRecord;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Component
 @Slf4j
-public class JobDoneConsumer implements CommandLineRunner {
+public class JobDoneConsumer {
 
     private final KafkaReceiverFactory factory;
 
@@ -30,9 +30,9 @@ public class JobDoneConsumer implements CommandLineRunner {
         this.announceNewsStream = announceNewsStream;
     }
 
-    @Override
-    public void run(String... args) {
-        factory.create(topic)
+    @KafkaListener(topics = {"${carinfo.kafka.consumer.jobDone.topic}"})
+    public void run(ConsumerRecord<String, String> record) {
+        Flux.just(record)
                 .flatMap(this::handleMessage)
                 .onErrorContinue((throwable, o) -> {
                     log.warn("Consume {} fail: {}", topic, throwable.getMessage());
@@ -41,7 +41,7 @@ public class JobDoneConsumer implements CommandLineRunner {
                 .subscribe();
     }
 
-    private Publisher<? extends String> handleMessage(ReceiverRecord<String, String> receiverRecord) {
+    private Publisher<? extends String> handleMessage(ConsumerRecord<String, String> receiverRecord) {
         return Mono.just(receiverRecord)
                 .filter(record -> "SCRAPE".equalsIgnoreCase(record.key()))
                 .map(ConsumerRecord::value)
@@ -52,8 +52,6 @@ public class JobDoneConsumer implements CommandLineRunner {
                     log.info("資料最後更新時間: {}", timeStr);
 
                 })
-                .doOnNext(noop -> receiverRecord.receiverOffset()
-                        .acknowledge())
                 .doOnError(throwable -> {
                     String s = "";
                 });
