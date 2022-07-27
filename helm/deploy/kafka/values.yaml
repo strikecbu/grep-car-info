@@ -1,5 +1,5 @@
 kafka:
-  replicaCount: 3
+  replicaCount: 1
   externalAccess:
     enabled: false
     service:
