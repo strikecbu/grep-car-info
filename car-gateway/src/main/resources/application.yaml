@@ -45,13 +45,17 @@ eureka:
       defaultZone: http://localhost:8011/eureka
 
 firebase:
+  config:
+    privatekeyid:
+    privatekey:
+    clientid:
   initial:
     type: "service_account"
     project_id: "microservices-ui"
-    private_key_id:
-    private_key:
+    private_key_id: ${firebase.config.privatekeyid}
+    private_key: ${firebase.config.privatekey}
     client_email: "firebase-adminsdk-6smt0@microservices-ui.iam.gserviceaccount.com"
-    client_id:
+    client_id:  ${firebase.config.clientid}
     auth_uri: "https://accounts.google.com/o/oauth2/auth"
     token_uri: "https://oauth2.googleapis.com/token"
     auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs"
