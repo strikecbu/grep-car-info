@@ -121,6 +121,17 @@ export const Footer = () => {
                 <p className="text-sm text-white">
                     © Copyright 2022 Andy idv. All rights reserved.
                 </p>
+                <ul className="flex flex-col mb-3 space-y-2 lg:mb-0 sm:space-y-0 sm:space-x-5 sm:flex-row">
+                    <li>
+                        <a
+                            href="https://icons8.com/"
+                            target="_blank"
+                            className="text-sm text-white transition-colors duration-300 hover:text-deep-purple-accent-400"
+                        >
+                            Icon powered by icons8.
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
     )

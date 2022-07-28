@@ -43,7 +43,7 @@ export default function HomePageBanner() {
                         <div className="sm:text-center lg:text-left">
                             <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
                                 <span className="block xl:inline">
-                                    找到你理想的車
+                                    不用出門也能找車！
                                 </span>{' '}
                                 <span className="block text-indigo-600 xl:inline">
                                     online price tracking
