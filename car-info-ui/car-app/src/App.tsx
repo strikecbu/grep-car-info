@@ -1,7 +1,7 @@
 import { Fragment, useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 import { useFirebase } from './hooks/firebaseHook'
-import { Auth, onAuthStateChanged, getIdToken } from '@firebase/auth'
+import { Auth, getIdToken, onAuthStateChanged } from '@firebase/auth'
 import { AppDispatch } from './store'
 import { useDispatch } from 'react-redux'
 import { AccountActions } from './store/account-slice'

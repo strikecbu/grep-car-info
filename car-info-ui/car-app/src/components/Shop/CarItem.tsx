@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import classes from './CarItem.module.css'
 import Environment from '../../env/Environment'
 import { AniNumber } from '../UI/AniNumber'
+import { animated, useSpring } from 'react-spring'
 
 export type Props = {
     keyId: string
@@ -45,6 +46,13 @@ const CarItem: React.FC<Props> = ({
 }) => {
     const [isStatic, setStatic] = useState(false)
 
+    const props = useSpring({
+        to: { opacity: 1 },
+        from: { opacity: 0 },
+        delay: 100,
+        config: { duration: 300 },
+    })
+
     function openPriceHandle() {
         openPriceLine(keyId)
     }
@@ -59,9 +67,10 @@ const CarItem: React.FC<Props> = ({
     }
 
     return (
-        <article
+        <animated.article
             className="max-w-md lg:w-[28rem] mx-auto mt-4 shadow-lg border rounded-md duration-300 hover:shadow-sm bg-white"
             key={keyId}
+            style={props}
         >
             <div>
                 {Environment.showCarPic && (
@@ -118,7 +127,7 @@ const CarItem: React.FC<Props> = ({
                     <p className="text-gray-400 text-sm mt-1">{description}</p>
                 </div>
             </div>
-        </article>
+        </animated.article>
     )
 }
 

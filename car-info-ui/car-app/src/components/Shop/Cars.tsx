@@ -1,9 +1,8 @@
 import CarItem, { Car } from './CarItem'
-import React, { Fragment, useRef, useState } from 'react'
-import { Parallax, ParallaxLayer } from '@react-spring/parallax'
+import React, { Fragment } from 'react'
+import { ParallaxLayer } from '@react-spring/parallax'
 import { isMobile } from 'react-device-detect'
-import Environment from '../../env/Environment'
-import { useSpring, animated } from 'react-spring'
+import { animated, useSpring } from 'react-spring'
 
 export type Props = {
     cars: Car[]
@@ -14,7 +13,7 @@ const Cars: React.FC<Props> = ({ cars, openPriceLine }) => {
     const props = useSpring({
         to: { opacity: 1 },
         from: { opacity: 0 },
-        delay: 200,
+        delay: 400,
     })
 
     if (isMobile) {
@@ -34,21 +33,19 @@ const Cars: React.FC<Props> = ({ cars, openPriceLine }) => {
                 </div>
                 <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3 container mx-auto mb-10">
                     {cars.map((items, key) => {
-                        if (key < 30 || !Environment.showCarPic) {
-                            return (
-                                <CarItem
-                                    key={items.id}
-                                    keyId={items.id}
-                                    img={items.imageUrl}
-                                    title={items.title}
-                                    description={items.description}
-                                    brand={items.brand}
-                                    updateTime={items.latestPrice.createTime}
-                                    price={items.latestPrice.price.toString()}
-                                    openPriceLine={openPriceLine}
-                                />
-                            )
-                        }
+                        return (
+                            <CarItem
+                                key={items.id}
+                                keyId={items.id}
+                                img={items.imageUrl}
+                                title={items.title}
+                                description={items.description}
+                                brand={items.brand}
+                                updateTime={items.latestPrice.createTime}
+                                price={items.latestPrice.price.toString()}
+                                openPriceLine={openPriceLine}
+                            />
+                        )
                     })}
                 </div>
             </Fragment>
@@ -58,9 +55,12 @@ const Cars: React.FC<Props> = ({ cars, openPriceLine }) => {
         <Fragment>
             <ParallaxLayer offset={0.2} speed={1}>
                 <div className="text-center">
-                    <h1 className="text-3xl text-gray-300 font-semibold">
+                    <animated.h1
+                        style={props}
+                        className="text-3xl text-gray-300 font-semibold"
+                    >
                         小施汽車
-                    </h1>
+                    </animated.h1>
                     <p className="mt-3 text-gray-500">
                         All data comes from sscar website and all rights
                         belongs.
@@ -76,21 +76,19 @@ const Cars: React.FC<Props> = ({ cars, openPriceLine }) => {
             >
                 <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3 container mx-auto">
                     {cars.map((items, key) => {
-                        if (key < 30 || !Environment.showCarPic) {
-                            return (
-                                <CarItem
-                                    key={items.id}
-                                    keyId={items.id}
-                                    img={items.imageUrl}
-                                    title={items.title}
-                                    description={items.description}
-                                    brand={items.brand}
-                                    updateTime={items.latestPrice.createTime}
-                                    price={items.latestPrice.price.toString()}
-                                    openPriceLine={openPriceLine}
-                                />
-                            )
-                        }
+                        return (
+                            <CarItem
+                                key={items.id}
+                                keyId={items.id}
+                                img={items.imageUrl}
+                                title={items.title}
+                                description={items.description}
+                                brand={items.brand}
+                                updateTime={items.latestPrice.createTime}
+                                price={items.latestPrice.price.toString()}
+                                openPriceLine={openPriceLine}
+                            />
+                        )
                     })}
                 </div>
             </ParallaxLayer>
