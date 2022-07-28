@@ -1,10 +1,12 @@
+import { NavLink } from 'react-router-dom'
+
 export const Footer = () => {
     return (
         <div className="px-4 pt-16 mx-auto sm:max-w-full md:px-24 lg:px-8 bg-gray-800 text-white">
             <div className="grid gap-10 row-gap-6 mb-8 sm:grid-cols-2 lg:grid-cols-4">
                 <div className="sm:col-span-2">
-                    <a
-                        href="/"
+                    <NavLink
+                        to="/"
                         aria-label="Go home"
                         title="Company"
                         className="inline-flex items-center"
@@ -17,12 +19,13 @@ export const Footer = () => {
                         <span className="ml-2 text-xl font-bold tracking-wide text-white uppercase">
                             ANDYSRV
                         </span>
-                    </a>
+                    </NavLink>
                     <div className="mt-6 lg:max-w-sm">
                         <p className="text-sm text-white">
-                            Sed ut perspiciatis unde omnis iste natus error sit
-                            voluptatem accusantium doloremque laudantium, totam
-                            rem aperiam.
+                            The information on this website is collected for
+                            personal interests, and all the information is
+                            public information on the Internet, but please
+                            inform us if there is any infringement.
                         </p>
                     </div>
                 </div>
@@ -30,17 +33,17 @@ export const Footer = () => {
                     <p className="text-base font-bold tracking-wide text-white">
                         Contacts
                     </p>
-                    <div className="flex">
-                        <p className="mr-1 text-white">Phone:</p>
-                        <a
-                            href="tel:850-123-5021"
-                            aria-label="Our phone"
-                            title="Our phone"
-                            className="transition-colors duration-300 text-deep-purple-accent-400 hover:text-deep-purple-800"
-                        >
-                            850-123-5021
-                        </a>
-                    </div>
+                    {/*<div className="flex">*/}
+                    {/*    <p className="mr-1 text-white">Phone:</p>*/}
+                    {/*    <a*/}
+                    {/*        href="tel:850-123-5021"*/}
+                    {/*        aria-label="Our phone"*/}
+                    {/*        title="Our phone"*/}
+                    {/*        className="transition-colors duration-300 text-deep-purple-accent-400 hover:text-deep-purple-800"*/}
+                    {/*    >*/}
+                    {/*        850-123-5021*/}
+                    {/*    </a>*/}
+                    {/*</div>*/}
                     <div className="flex">
                         <p className="mr-1 text-white">Email:</p>
                         <a
@@ -49,7 +52,7 @@ export const Footer = () => {
                             title="Our email"
                             className="transition-colors duration-300 text-deep-purple-accent-400 hover:text-deep-purple-800"
                         >
-                            info@lorem.mail
+                            someonecallhelp@gmail.com
                         </a>
                     </div>
                     <div className="flex">
@@ -62,7 +65,7 @@ export const Footer = () => {
                             title="Our address"
                             className="transition-colors duration-300 text-deep-purple-accent-400 hover:text-deep-purple-800"
                         >
-                            312 Lovely Street, NY
+                            704 Tainan, TW
                         </a>
                     </div>
                 </div>
@@ -110,41 +113,14 @@ export const Footer = () => {
                         </a>
                     </div>
                     <p className="mt-4 text-sm text-white">
-                        Bacon ipsum dolor amet short ribs pig sausage prosciutto
-                        chicken spare ribs salami.
+                        本網站資料為個人興趣蒐集而來，所有資料皆為網路上公開資料，但如有侵權敬請告知。
                     </p>
                 </div>
             </div>
             <div className="flex flex-col-reverse justify-between pt-5 pb-10 border-t lg:flex-row">
                 <p className="text-sm text-white">
-                    © Copyright 2020 Lorem Inc. All rights reserved.
+                    © Copyright 2022 Andy idv. All rights reserved.
                 </p>
-                <ul className="flex flex-col mb-3 space-y-2 lg:mb-0 sm:space-y-0 sm:space-x-5 sm:flex-row">
-                    <li>
-                        <a
-                            href="/"
-                            className="text-sm text-white transition-colors duration-300 hover:text-deep-purple-accent-400"
-                        >
-                            F.A.Q
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href="/"
-                            className="text-sm text-white transition-colors duration-300 hover:text-deep-purple-accent-400"
-                        >
-                            Privacy Policy
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href="/"
-                            className="text-sm text-white transition-colors duration-300 hover:text-deep-purple-accent-400"
-                        >
-                            Terms &amp; Conditions
-                        </a>
-                    </li>
-                </ul>
             </div>
         </div>
     )
