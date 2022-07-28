@@ -1,4 +1,5 @@
 carinfo:
+  antiFrequency: 5
   schedule:
     scrape-car:
 #      fixedDelay: 99999999
@@ -25,15 +26,15 @@ spring:
     active: dev
   kafka:
     producer:
-      bootstrap-servers: 192.168.0.110:32595,192.168.0.110:32027,192.168.0.110:32448
+      bootstrap-servers: 192.168.0.110:30842
     consumer:
-      bootstrap-servers: 192.168.0.110:32595,192.168.0.110:32027,192.168.0.110:32448
+      bootstrap-servers: 192.168.0.110:30842
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       group-id: car-info-service-group
     admin:
       properties:
-        bootstrap.servers: 192.168.0.110:32595,192.168.0.110:32027,192.168.0.110:32448
+        bootstrap.servers: 192.168.0.110:30842
   data:
     mongodb:
 #      uri: mongodb://localhost:27017

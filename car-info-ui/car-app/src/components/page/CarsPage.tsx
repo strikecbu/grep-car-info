@@ -103,7 +103,9 @@ const CarsPage: React.FC = () => {
                 body: JSON.stringify(data),
                 method: 'POST',
             })
-            if (response.status !== 202) {
+            if (response.status === 200) {
+                setMessage('資料已為最新資料！')
+            } else if (response.status !== 202) {
                 setMessage('呼叫錯誤，請稍後再試')
             } else {
                 setMessage('拉取新資料中，請等候通知...')
