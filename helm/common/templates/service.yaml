@@ -2,13 +2,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.applicationName }}-service
+  name: {{ .Values.applicationName }}-{{ .Values.global.activeProfile }}-service
   labels:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
 spec:
   type: {{ .Values.service.type }}
   selector:
-    app: {{ .Values.applicationName }}
+    app: {{ .Values.applicationName }}-{{ .Values.global.activeProfile }}
   ports:
   - port: {{ .Values.service.externalPort }}
     targetPort: {{ .Values.service.internalPort }}

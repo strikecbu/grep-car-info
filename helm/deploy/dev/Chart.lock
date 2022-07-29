@@ -1,0 +1,9 @@
+dependencies:
+- name: common
+  repository: file://../../common
+  version: 0.1.0
+- name: car-gateway
+  repository: file://../../services/car-gateway
+  version: 0.1.0
+digest: sha256:70786e640bb4765d730685473327aa78e305635e1bf30fa8693f7cdde906bb0c
+generated: "2022-07-29T20:46:20.006267+08:00"

@@ -1,0 +1,11 @@
+global:
+  configMapName: cloudcar-config-dev
+  secretName: cloudcar-secret
+  activeProfile: dev
+  configServerImport: configserver:http://car-config-service:8010
+  springZipkinBaseurl: http://zipkin-service:9411
+  firebase:
+    keyId: 
+    privateKey: 
+    clientId: 
+  mongodburl: 

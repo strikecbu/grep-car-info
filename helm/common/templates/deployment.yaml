@@ -2,18 +2,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
-  name: {{ .Values.applicationName }}-deploy
+  name: {{ .Values.applicationName }}-{{ .Values.global.activeProfile }}-deploy
   labels:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
 spec:
   selector:
     matchLabels:
-      app: {{ .Values.applicationName }}
+      app: {{ .Values.applicationName }}-{{ .Values.global.activeProfile }}
   replicas: {{ .Values.replicaCount }}
   template:
     metadata:
       labels:
-        app: {{ .Values.applicationName }}
+        app: {{ .Values.applicationName }}-{{ .Values.global.activeProfile }}
     spec:
       containers:
       - name: {{ .Chart.Name }}
