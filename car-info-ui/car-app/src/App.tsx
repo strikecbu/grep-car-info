@@ -1,5 +1,5 @@
 import { Fragment, useEffect } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import { useFirebase } from './hooks/firebaseHook'
 import { Auth, getIdToken, onAuthStateChanged } from '@firebase/auth'
 import { AppDispatch } from './store'
@@ -13,6 +13,12 @@ function App() {
     const auth = useFirebase()[1] as Auth
     const dispatch: AppDispatch = useDispatch()
     const setMessage = useAnnounce()[1]
+
+    const location = useLocation()
+    useEffect(() => {
+        const suffix = location.pathname.replaceAll('/', ' ')
+        document.title = `ANDYSRV -${suffix}`
+    }, [location])
 
     useEffect(() => {
         console.log('effect once')
