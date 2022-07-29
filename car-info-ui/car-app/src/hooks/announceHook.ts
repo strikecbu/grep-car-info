@@ -24,6 +24,7 @@ export const useAnnounce = (): [State, (message: string) => void] => {
             ...store,
             message,
         }
+        console.log(`公告：${message}`)
         for (let listener of listeners) {
             listener(store)
         }

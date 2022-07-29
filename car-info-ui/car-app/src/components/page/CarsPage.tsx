@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { isMobile } from 'react-device-detect'
 
 import { Price } from '../Shop/PriceLine'
 import { useSelector } from 'react-redux'
@@ -8,7 +7,7 @@ import Environment from '../../env/Environment'
 import { RootState } from '../../store'
 import { useAnnounce } from '../../hooks/announceHook'
 import { CarAniContent } from '../Shop/CarAniContent'
-import { CarContent } from '../Shop/CarContent'
+import { useCarPage } from '../../hooks/carPageUIhook'
 
 type CarPage = {
     cars: Car[]
@@ -23,6 +22,7 @@ const CarsPage: React.FC = () => {
     const [prices, setPrices] = useState<Price[]>([])
     const [state, setMessage] = useAnnounce()
     const [scraping, setScrapeStat] = useState(false)
+    const pageSettings = useCarPage()
     const token = useSelector((state: RootState) => state.account.token)
 
     useEffect(() => {
@@ -79,7 +79,7 @@ const CarsPage: React.FC = () => {
     function splitPage(cars: Car[]): CarPage[] {
         const result: CarPage[] = []
         const copyCars = [...cars]
-        const eachPageCount = 45
+        const eachPageCount = pageSettings.cardCount
         const pageNum = Math.ceil(cars.length / eachPageCount)
         for (let i = 0; i < pageNum; i++) {
             result.push({ cars: copyCars.splice(0, eachPageCount) })
@@ -130,21 +130,6 @@ const CarsPage: React.FC = () => {
                 })
                 break
         }
-    }
-
-    if (isMobile) {
-        return (
-            <CarContent
-                scraping={scraping}
-                refreshListHandler={refreshListHandler}
-                cars={cars}
-                showPrice={showPrice}
-                detailUrl={detailUrl}
-                prices={prices}
-                closePriceLine={closePriceLine}
-                openPriceLine={openPriceLine}
-            />
-        )
     }
 
     return (
