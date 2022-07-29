@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cloudcar-ingress
+  labels:
+    name: cloudcar-ingress
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+      - www.code.idv.tw
+      secretName: beta-ssl-secret
+  rules:
+    - host: www.code.idv.tw
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/car-info-service"
+            backend:
+              service:
+                name: car-gateway-service
+                port:
+                  number: 8087
+
