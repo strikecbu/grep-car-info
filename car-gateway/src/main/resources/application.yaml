@@ -28,7 +28,7 @@ spring:
     sampler:
       probability: 1
   profiles:
-    active: dev
+    active: local
 
 management:
   endpoints:

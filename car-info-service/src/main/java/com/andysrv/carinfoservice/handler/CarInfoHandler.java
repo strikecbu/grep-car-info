@@ -56,7 +56,7 @@ public class CarInfoHandler {
                     scrapeProducer.sendScrapeEvent(vendorType.get());
                     String timeStr = LocalDateTime.now()
                             .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-                    announceNewsStream.next(String.format("資料最後更新時間: %s", timeStr));
+                    announceNewsStream.next("拉取新資料中，請等候通知...");
                     return ServerResponse.accepted()
                             .build();
                 })
