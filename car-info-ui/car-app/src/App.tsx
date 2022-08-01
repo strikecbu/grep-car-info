@@ -24,7 +24,7 @@ function App() {
         console.log('effect once')
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                const uid = user.uid
+                // const uid = user.uid
                 // console.log('Found user!! uid: ', uid)
                 getIdToken(user)
                     .then((idToken) => {
