@@ -47,12 +47,12 @@ export const Footer = () => {
                     <div className="flex">
                         <p className="mr-1 text-white">Email:</p>
                         <a
-                            href="mailto:info@lorem.mail"
+                            href="mailto:someonecallhelptw@gmail.com"
                             aria-label="Our email"
                             title="Our email"
                             className="transition-colors duration-300 text-deep-purple-accent-400 hover:text-deep-purple-800"
                         >
-                            someonecallhelp@gmail.com
+                            someonecallhelptw@gmail.com
                         </a>
                     </div>
                     <div className="flex">
