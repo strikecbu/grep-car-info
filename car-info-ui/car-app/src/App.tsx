@@ -25,7 +25,7 @@ function App() {
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 const uid = user.uid
-                console.log('Found user!! uid: ', uid)
+                // console.log('Found user!! uid: ', uid)
                 getIdToken(user)
                     .then((idToken) => {
                         dispatch(AccountActions.addToken(idToken))
