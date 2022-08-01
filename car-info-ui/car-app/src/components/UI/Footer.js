@@ -113,7 +113,7 @@ export const Footer = () => {
                         </a>
                     </div>
                     <p className="mt-4 text-sm text-white">
-                        本網站資料為個人興趣蒐集而來，所有資料皆為網路上公開資料，但如有侵權敬請告知。
+                        本網站資料為個人興趣蒐集而來，所有資料皆為網路上公開資料，如有侵權敬請告知。
                     </p>
                 </div>
             </div>
