@@ -49,14 +49,14 @@ export default () => {
                                 </li>
                             )}
 
-                            <li>
-                                <NavLink
-                                    className="font-medium tracking-wide text-gray-100 transition-colors duration-200 hover:text-teal-400"
-                                    to="/home"
-                                >
-                                    About us
-                                </NavLink>
-                            </li>
+                            {/*<li>*/}
+                            {/*    <NavLink*/}
+                            {/*        className="font-medium tracking-wide text-gray-100 transition-colors duration-200 hover:text-teal-400"*/}
+                            {/*        to="/home"*/}
+                            {/*    >*/}
+                            {/*        About us*/}
+                            {/*    </NavLink>*/}
+                            {/*</li>*/}
                         </ul>
                     </div>
                     <ul className="flex items-center hidden space-x-8 lg:flex">
@@ -171,14 +171,14 @@ export default () => {
                                                 </li>
                                             )}
 
-                                            <li>
-                                                <NavLink
-                                                    className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-purple-400"
-                                                    to="/home"
-                                                >
-                                                    About us
-                                                </NavLink>
-                                            </li>
+                                            {/*<li>*/}
+                                            {/*    <NavLink*/}
+                                            {/*        className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-purple-400"*/}
+                                            {/*        to="/home"*/}
+                                            {/*    >*/}
+                                            {/*        About us*/}
+                                            {/*    </NavLink>*/}
+                                            {/*</li>*/}
                                             {!token && (
                                                 <Fragment>
                                                     <li>
